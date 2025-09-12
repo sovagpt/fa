@@ -30,8 +30,8 @@
     position: fixed; 
     left: 16px; 
     bottom: 16px; 
-    width: 300px; 
-    height: 220px; 
+    width: 380px; 
+    height: 315px; 
     border-radius: 16px; 
     background: rgba(16,18,28,0.5); 
     border: 1px solid rgba(255,255,255,0.12); 
@@ -40,8 +40,8 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.35); 
     z-index: 900; 
     display: flex; 
-    flex-direction: column; 
     overflow: hidden; 
+    padding: 8px;
 }
 
 .threeD-header { 
@@ -89,35 +89,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #b8c1ce; 
-    font-size: 0.95rem;
-    padding: 16px;
-    text-align: center;
+    padding: 0;
 }
 
 .character-gif {
-    width: 140px;
-    height: 140px;
-    border-radius: 16px;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
     object-fit: cover;
     border: 2px solid rgba(37, 99, 235, 0.3);
     box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
 }
 
 .character-gif:hover {
     transform: scale(1.05);
     border-color: rgba(37, 99, 235, 0.5);
     box-shadow: 0 12px 25px rgba(37, 99, 235, 0.3);
-}
-
-.character-label {
-    font-size: 0.85rem;
-    color: #94a3b8;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
         /* Enhanced background glow */
@@ -1397,17 +1384,6 @@
                     }
                 });
             }
-            
-            // 3D panel close handler
-            const closeThreeDPanel = document.getElementById('closeThreeDPanel');
-            const threeDPanel = document.getElementById('threeDPanel');
-            
-            if (closeThreeDPanel && threeDPanel) {
-                closeThreeDPanel.addEventListener('click', () => { 
-                    threeDPanel.style.display = 'none'; 
-                });
-            }
-        }
 
         function askQuestion(question) {
             const messageInput = document.getElementById('messageInput');
@@ -1700,17 +1676,13 @@ Provide your analysis and predictions based on this market data.
     </script>
     <!-- 3D Character Panel -->
 <div class="threeD-panel" id="threeDPanel">
-    <div class="threeD-header">
-        <span>3D Character</span>
-        <button class="panel-close" id="closeThreeDPanel" type="button">Close</button>
-    </div>
     <div class="threeD-body">
-    <img src="https://github.com/sovagpt/fa/raw/main/polymarketg.gif" alt="3D Character" class="character-gif" />
-    <div class="character-label">PolyGF Assistant</div>
-</div>
+        <img src="https://github.com/sovagpt/fa/raw/main/polymarketg.gif" alt="3D Character" class="character-gif" />
+    </div>
 </div>
 </body>
 </html>
+
 
 
 
