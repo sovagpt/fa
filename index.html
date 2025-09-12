@@ -635,6 +635,141 @@
             font-size: 0.85rem;
         }
 
+        .markets-section {
+    margin-top: 24px;
+}
+
+.markets-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.market-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 16px 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.market-card:hover {
+    border-color: rgba(37, 99, 235, 0.5);
+    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.2);
+    transform: translateY(-2px);
+}
+
+.market-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8, #1e40af);
+}
+
+.market-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.market-title {
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    flex: 1;
+    padding-right: 16px;
+}
+
+.market-outcomes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 18px 0;
+}
+
+.outcome {
+    padding: 14px 18px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.outcome:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.outcome.favored {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+    border-color: rgba(5, 150, 105, 0.3);
+}
+
+.outcome.underdog {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+    border-color: rgba(220, 38, 38, 0.3);
+}
+
+.outcome.neutral {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+    border-color: rgba(107, 114, 128, 0.3);
+}
+
+.market-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.stat-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9ca3af;
+    font-weight: 600;
+}
+
+.stat-value {
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
         .footer-legal {
             display: flex;
             gap: 24px;
@@ -1384,6 +1519,7 @@
                     }
                 });
             }
+        }
 
         function askQuestion(question) {
             const messageInput = document.getElementById('messageInput');
@@ -1653,6 +1789,54 @@ Provide your analysis and predictions based on this market data.
     chatHistory.push({ sender, content });
 }
 
+        function createMarketCard(market, index) {
+    const formatVolume = (vol) => {
+        if (!vol || vol === 0) return '$0';
+        if (vol > 1000000) return `${(vol / 1000000).toFixed(1)}M`;
+        if (vol > 1000) return `${(vol / 1000).toFixed(1)}K`;
+        return `${vol.toFixed(0)}`;
+    };
+    
+    const formatPrice = (price) => `${(price * 100).toFixed(1)}%`;
+    
+    const outcome1 = market.outcomes[0];
+    const outcome2 = market.outcomes[1];
+    
+    const outcome1Class = outcome1.price > 0.6 ? 'favored' : outcome1.price < 0.4 ? 'underdog' : 'neutral';
+    const outcome2Class = outcome2.price > 0.6 ? 'favored' : outcome2.price < 0.4 ? 'underdog' : 'neutral';
+    
+    return `
+        <div class="market-card">
+            <div class="market-header">
+                <div class="market-title">${market.title}</div>
+                ${market.image ? `<img src="${market.image}" alt="Market" class="market-image" onerror="this.style.display='none'">` : ''}
+            </div>
+            <div class="market-outcomes">
+                <div class="outcome ${outcome1Class}">
+                    ${outcome1.name}: ${formatPrice(outcome1.price)}
+                </div>
+                <div class="outcome ${outcome2Class}">
+                    ${outcome2.name}: ${formatPrice(outcome2.price)}
+                </div>
+            </div>
+            <div class="market-stats">
+                <div class="stat-item">
+                    <span class="stat-label">24h Volume</span>
+                    <span class="stat-value">${formatVolume(market.volume24h)}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Volume</span>
+                    <span class="stat-value">${formatVolume(market.volumeTotal)}</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Liquidity</span>
+                    <span class="stat-value">${formatVolume(market.liquidity)}</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
         function showTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
             const messagesContainer = document.getElementById('chatMessages');
@@ -1682,6 +1866,7 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
+
 
 
 
