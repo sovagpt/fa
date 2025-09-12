@@ -1558,7 +1558,7 @@
             
             try {
                 isLoading = true;
-                const relevantMarkets = findRelevantMarkets(message);
+                const relevantMarkets = await findRelevantMarketsWithAI(message);
                 const response = await getAIResponse(message, relevantMarkets);
                 hideTypingIndicator();
                 addMessage('bot', response, relevantMarkets);
@@ -1667,6 +1667,62 @@
     return relevantMarkets;
 }
 
+        function extractCategory(title, description) {
+    const text = (title + ' ' + description).toLowerCase();
+    if (text.includes('crypto') || text.includes('bitcoin') || text.includes('ethereum') || text.includes('btc') || text.includes('eth')) return 'crypto';
+    if (text.includes('fed') || text.includes('interest rate') || text.includes('inflation') || text.includes('fomc')) return 'finance';
+    if (text.includes('election') || text.includes('president') || text.includes('political') || text.includes('biden') || text.includes('trump')) return 'politics';
+    if (text.includes('nfl') || text.includes('nba') || text.includes('sport') || text.includes('football') || text.includes('basketball')) return 'sports';
+    return 'general';
+}
+
+async function findRelevantMarketsWithAI(userQuery) {
+    const markets = polymarketData.markets || [];
+    
+    // Take a sample to avoid token limits
+    const marketSample = markets.slice(0, 100);
+    
+    // Create condensed data for AI
+    const marketSummaries = marketSample.map((market, index) => ({
+        index: index,
+        title: market.title,
+        description: market.description.substring(0, 200), // Truncate long descriptions
+        volume24h: market.volume24h,
+        category: extractCategory(market.title, market.description)
+    }));
+    
+    const aiContext = `
+User Query: "${userQuery}"
+
+Available Markets:
+${JSON.stringify(marketSummaries, null, 2)}
+
+Task: Find the 3-4 most relevant markets for this query. Return only a JSON array of indices like [2, 15, 23]. Consider semantic relevance and market activity.`;
+
+    try {
+        const response = await callOpenRouterAPI(aiContext);
+        
+        // Extract just the JSON array from the response
+        const jsonMatch = response.match(/\[[\d,\s]+\]/);
+        if (!jsonMatch) {
+            console.log('AI response format issue, falling back to keyword search');
+            return findRelevantMarkets(userQuery);
+        }
+        
+        const relevantIndices = JSON.parse(jsonMatch[0]);
+        const relevantMarkets = relevantIndices
+            .map(index => marketSample[index])
+            .filter(Boolean)
+            .slice(0, 4);
+        
+        return relevantMarkets.length > 0 ? relevantMarkets : findRelevantMarkets(userQuery);
+        
+    } catch (error) {
+        console.error('AI market search failed:', error);
+        return findRelevantMarkets(userQuery);
+    }
+}
+
         function createAIContext(userMessage, relevantMarkets) {
             const marketData = relevantMarkets.map(market => ({
                 title: market.title,
@@ -1700,50 +1756,55 @@ Provide your analysis and predictions based on this market data.
         }
 
         async function callOpenRouterAPI(context) {
-            let apiKey;
-            try {
-                const keyResponse = await fetch('/api/get-api-key');
-                const keyData = await keyResponse.json();
-                apiKey = keyData.apiKey;
-            } catch (error) {
-                console.error('Failed to get API key:', error);
-                throw new Error('API key not available');
-            }
+    let apiKey;
+    try {
+        const keyResponse = await fetch('/api/get-api-key');
+        const keyData = await keyResponse.json();
+        apiKey = keyData.apiKey;
+    } catch (error) {
+        console.error('Failed to get API key:', error);
+        throw new Error('API key not available');
+    }
 
-            const response = await fetch(CONFIG.OPENROUTER_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                    'HTTP-Referer': window.location.origin,
-                    'X-Title': 'Polymarket AI Advisor'
+    // Check if this is a market search request
+    const isMarketSearch = context.includes('Available Markets:');
+    const systemMessage = isMarketSearch 
+        ? 'You are a data analyst that finds relevant prediction markets. Return only the requested JSON array format.'
+        : 'You are an expert betting analyst who provides intelligent insights on prediction markets. Analyze market data and give clear, well-formatted predictions with reasoning.';
+
+    const response = await fetch(CONFIG.OPENROUTER_API_URL, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': window.location.origin,
+            'X-Title': 'Polymarket AI Advisor'
+        },
+        body: JSON.stringify({
+            model: CONFIG.MODEL,
+            messages: [
+                {
+                    role: 'system',
+                    content: systemMessage
                 },
-                body: JSON.stringify({
-                    model: CONFIG.MODEL,
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'You are an expert betting analyst who provides intelligent insights on prediction markets. Analyze market data and give clear, well-formatted predictions with reasoning. Structure your responses with clear paragraphs and use formatting to make information easily digestible.'
-                        },
-                        {
-                            role: 'user',
-                            content: context
-                        }
-                    ],
-                    max_tokens: 1000,
-                    temperature: 0.7
-                })
-            });
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
-            }
-            
-            const data = await response.json();
-            return data.choices[0].message.content;
-        }
-
+                {
+                    role: 'user',
+                    content: context
+                }
+            ],
+            max_tokens: isMarketSearch ? 100 : 1000,
+            temperature: isMarketSearch ? 0.1 : 0.7
+        })
+    });
+    
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
+    }
+    
+    const data = await response.json();
+    return data.choices[0].message.content;
+}
         function addMessage(sender, content, relevantMarkets = null) {
     const messagesContainer = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
@@ -1871,6 +1932,7 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
+
 
 
 
