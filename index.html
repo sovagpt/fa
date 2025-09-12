@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polymarket AI Betting Advisor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 80vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .file-upload {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .file-label:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .file-status {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .message-content {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            max-width: 70%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .market-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-title {
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .market-outcomes {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .outcome {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .outcome.yes {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .outcome.no {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .market-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: rgba(248, 250, 252, 0.8);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 15px 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 25px;
+            background: white;
+            font-size: 1rem;
+            resize: none;
+            max-height: 120px;
+            min-height: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .send-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: fit-content;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6366f1;
+            animation: typing 1.5s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+            30% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+        }
+
+        .welcome-message h2 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .example-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .example-question {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            border: 1px solid #cbd5e1;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .example-question:hover {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 90vh;
+                margin: 20px 10px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .market-outcomes {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🎯 Polymarket AI Advisor</h1>
+            <p>Get AI-powered insights on prediction markets</p>
+            <div class="file-upload">
+                <label for="jsonFile" class="file-label">📁 Upload Polymarket JSON</label>
+                <input type="file" id="jsonFile" class="file-input" accept=".json">
+                <span id="fileStatus" class="file-status">No file loaded</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                <h2>Welcome to Polymarket AI Advisor!</h2>
+                <p>Upload your Polymarket JSON data file and ask me about any betting markets. I'll analyze the odds and give you my predictions!</p>
+                <div class="example-questions">
+                    <div class="example-question" onclick="askQuestion('What are the current Fed interest rate predictions?')">
+                        💰 What are the current Fed interest rate predictions?
+                    </div>
+                    <div class="example-question" onclick="askQuestion('Show me the most popular sports betting markets')">
+                        🏈 Show me the most popular sports betting markets
+                    </div>
+                    <div class="example-question" onclick="askQuestion('Which markets have the highest trading volume?')">
+                        📈 Which markets have the highest trading volume?
+                    </div>
+                    <div class="example-question" onclick="askQuestion('What are your predictions for upcoming NFL games?')">
+                        🎯 What are your predictions for upcoming NFL games?
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <span>AI is thinking...</span>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="chat-input">
+                <textarea 
+                    class="input-field" 
+                    id="messageInput" 
+                    placeholder="Ask me about any Polymarket betting opportunities..."
+                    rows="1"
+                ></textarea>
+                <button class="send-button" id="sendButton" onclick="sendMessage()">
+                    ▶️
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let polymarketData = null;
+        let chatHistory = [];
+
+        // File upload handling
+        document.getElementById('jsonFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        polymarketData = JSON.parse(e.target.result);
+                        document.getElementById('fileStatus').textContent = `✅ Loaded ${polymarketData.markets?.length || 0} markets`;
+                        
+                        // Add welcome message after file load
+                        if (document.querySelector('.welcome-message')) {
+                            document.querySelector('.welcome-message').remove();
+                            addMessage('bot', `Great! I've loaded ${polymarketData.markets?.length || 0} markets from your Polymarket data. What would you like to know about the betting opportunities?`);
+                        }
+                    } catch (error) {
+                        document.getElementById('fileStatus').textContent = '❌ Invalid JSON file';
+                        alert('Please upload a valid JSON file');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Input handling
+        document.getElementById('messageInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Auto-resize textarea
+        document.getElementById('messageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        function askQuestion(question) {
+            document.getElementById('messageInput').value = question;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            if (!polymarketData) {
+                alert('Please upload your Polymarket JSON file first!');
+                return;
+            }
+
+            // Clear welcome message if it exists
+            const welcomeMsg = document.querySelector('.welcome-message');
+            if (welcomeMsg) {
+                welcomeMsg.remove();
+            }
+
+            input.value = '';
+            input.style.height = 'auto';
+            
+            addMessage('user', message);
+            showTypingIndicator();
+            
+            // Simulate AI thinking time
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                hideTypingIndicator();
+                addMessage('bot', response);
+            }, 1500 + Math.random() * 1000);
+        }
+
+        function addMessage(sender, content) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'user' ? 'You' : 'AI';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = content;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            chatHistory.push({ sender, content });
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            const messagesContainer = document.getElementById('chatMessages');
+            indicator.style.display = 'flex';
+            messagesContainer.appendChild(indicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.style.display = 'none';
+        }
+
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            const markets = polymarketData.markets || [];
+            
+            // Search for relevant markets
+            let relevantMarkets = [];
+            
+            // Keywords mapping
+            const keywords = {
+                'fed': ['federal', 'interest', 'rate', 'fed', 'fomc'],
+                'sports': ['nfl', 'mlb', 'nba', 'nhl', 'sports', 'game', 'match', 'vs'],
+                'politics': ['election', 'president', 'political', 'vote', 'campaign'],
+                'crypto': ['bitcoin', 'ethereum', 'crypto', 'btc', 'eth', 'blockchain'],
+                'volume': ['volume', 'trading', 'popular', 'active'],
+                'high_odds': ['odds', 'likely', 'probable', 'chance']
+            };
+            
+            // Fed rate markets
+            if (keywords.fed.some(kw => message.includes(kw))) {
+                relevantMarkets = markets.filter(m => 
+                    m.title.toLowerCase().includes('fed') || 
+                    m.title.toLowerCase().includes('interest') ||
+                    m.description.toLowerCase().includes('federal')
+                );
+            }
+            // Sports markets
+            else if (keywords.sports.some(kw => message.includes(kw)) || message.includes('vs')) {
+                relevantMarkets = markets.filter(m => 
+                    m.title.includes('vs') || 
+                    ['nfl', 'mlb', 'nba', 'nhl'].some(sport => m.title.toLowerCase().includes(sport))
+                );
+            }
+            // Volume/popularity query
+            else if (keywords.volume.some(kw => message.includes(kw))) {
+                relevantMarkets = markets
+                    .sort((a, b) => (b.volume24h || 0) - (a.volume24h || 0))
+                    .slice(0, 5);
+            }
+            // General search
+            else {
+                const searchTerms = message.split(' ').filter(word => 
+                    word.length > 2 && 
+                    !['the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'her', 'was', 'one', 'our', 'had', 'but', 'his', 'has', 'how', 'who', 'did'].includes(word)
+                );
+                
+                relevantMarkets = markets.filter(m => 
+                    searchTerms.some(term => 
+                        m.title.toLowerCase().includes(term) || 
+                        m.description.toLowerCase().includes(term)
+                    )
+                ).slice(0, 3);
+            }
+            
+            // If no specific markets found, show top volume markets
+            if (relevantMarkets.length === 0) {
+                relevantMarkets = markets
+                    .sort((a, b) => (b.volume24h || 0) - (a.volume24h || 0))
+                    .slice(0, 3);
+            }
+            
+            return generateAnalysis(userMessage, relevantMarkets);
+        }
+
+        function generateAnalysis(userMessage, markets) {
+            if (markets.length === 0) {
+                return "I couldn't find any relevant markets in your data for that query. Try asking about Fed rates, sports games, or popular markets!";
+            }
+            
+            let response = `Here are the most relevant markets I found:<br><br>`;
+            
+            markets.forEach(market => {
+                const yesOutcome = market.outcomes.find(o => o.name.toLowerCase() === 'yes') || market.outcomes[0];
+                const noOutcome = market.outcomes.find(o => o.name.toLowerCase() === 'no') || market.outcomes[1];
+                
+                response += createMarketCard(market, yesOutcome, noOutcome);
+            });
+            
+            // Add AI analysis
+            response += `<div style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #fef3c7, #fcd34d); border-radius: 12px; border-left: 4px solid #f59e0b;">`;
+            response += `<strong>🤖 My Analysis:</strong><br><br>`;
+            
+            if (markets.some(m => m.title.toLowerCase().includes('fed'))) {
+                response += generateFedAnalysis(markets);
+            } else if (markets.some(m => m.title.includes('vs'))) {
+                response += generateSportsAnalysis(markets);
+            } else {
+                response += generateGeneralAnalysis(markets);
+            }
+            
+            response += `</div>`;
+            
+            return response;
+        }
+
+        function createMarketCard(market, outcome1, outcome2) {
+            const formatVolume = (vol) => {
+                if (vol > 1000000) return `$${(vol / 1000000).toFixed(1)}M`;
+                if (vol > 1000) return `$${(vol / 1000).toFixed(1)}K`;
+                return `$${vol?.toFixed(0) || 0}`;
+            };
+            
+            const formatPrice = (price) => `${(price * 100).toFixed(1)}%`;
+            
+            return `
+                <div class="market-card">
+                    <div class="market-title">${market.title}</div>
+                    <div class="market-outcomes">
+                        <div class="outcome yes">
+                            ${outcome1.name}: ${formatPrice(outcome1.price)}
+                        </div>
+                        <div class="outcome no">
+                            ${outcome2.name}: ${formatPrice(outcome2.price)}
+                        </div>
+                    </div>
+                    <div class="market-stats">
+                        <span>24h Volume: ${formatVolume(market.volume24h)}</span>
+                        <span>Total Volume: ${formatVolume(market.volumeTotal)}</span>
+                        <span>Liquidity: ${formatVolume(market.liquidity)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateFedAnalysis(markets) {
+            const fedMarkets = markets.filter(m => m.title.toLowerCase().includes('fed'));
+            let analysis = '';
+            
+            if (fedMarkets.length > 0) {
+                const cutMarket = fedMarkets.find(m => m.title.includes('25 bps') && m.title.includes('decrease'));
+                const noChangeMarket = fedMarkets.find(m => m.title.includes('No change'));
+                const increaseMarket = fedMarkets.find(m => m.title.includes('increase'));
+                
+                if (cutMarket) {
+                    const cutProb = cutMarket.outcomes.find(o => o.name === 'Yes')?.price * 100;
+                    analysis += `The market is pricing in a <strong>${cutProb?.toFixed(1)}% chance of a 25bps rate cut</strong> at the September Fed meeting. `;
+                }
+                
+                if (noChangeMarket) {
+                    const noChangeProb = noChangeMarket.outcomes.find(o => o.name === 'Yes')?.price * 100;
+                    analysis += `There's only a <strong>${noChangeProb?.toFixed(1)}% chance of no change</strong>, `;
+                }
+                
+                analysis += `<br><br><strong>My Prediction:</strong> Based on the current economic environment and the market pricing, I believe the Fed will likely cut rates by 25bps. The extremely low probability of no change suggests the market is very confident in a rate cut. However, watch for any last-minute economic data that could shift sentiment.`;
+            }
+            
+            return analysis;
+        }
+
+        function generateSportsAnalysis(markets) {
+            let analysis = '';
+            const sportsMarkets = markets.filter(m => m.title.includes('vs'));
+            
+            if (sportsMarkets.length > 0) {
+                sportsMarkets.forEach(market => {
+                    const favorite = market.favoredOutcome;
+                    const favoritePrice = market.outcomes.find(o => o.name === favorite)?.price * 100;
+                    
+                    analysis += `<strong>${market.title}:</strong> The market heavily favors <strong>${favorite}</strong> with ${favoritePrice?.toFixed(1)}% implied probability. `;
+                    
+                    if (favoritePrice > 85) {
+                        analysis += `This seems like a very safe bet, but the returns will be minimal due to low odds. `;
+                    } else if (favoritePrice < 60) {
+                        analysis += `This is a closer matchup with more betting value on both sides. `;
+                    }
+                    analysis += `<br>`;
+                });
+                
+                analysis += `<br><strong>My Recommendation:</strong> Look for value in the underdog bets if you believe the market is overconfident in the favorites. Sports betting is inherently unpredictable!`;
+            }
+            
+            return analysis;
+        }
+
+        function generateGeneralAnalysis(markets) {
+            const totalVolume = markets.reduce((sum, m) => sum + (m.volume24h || 0), 0);
+            const avgVolume = totalVolume / markets.length;
+            
+            let analysis = `I found ${markets.length} relevant markets with a combined 24h volume of $${(totalVolume / 1000000).toFixed(1)}M. `;
+            
+            const highVolumeMarkets = markets.filter(m => (m.volume24h || 0) > avgVolume);
+            
+            if (highVolumeMarkets.length > 0) {
+                analysis += `The highest activity is in: <strong>${highVolumeMarkets[0].title}</strong> with $${(highVolumeMarkets[0].volume24h / 1000000).toFixed(1)}M in 24h volume. `;
+            }
+            
+            analysis += `<br><br><strong>My Take:</strong> High volume markets tend to have more efficient pricing, while lower volume markets might offer more opportunities for value betting. Always consider the liquidity when placing larger bets.`;
+            
+            return analysis;
+        }
+    </script>
+</body>
+</html>
