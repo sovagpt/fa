@@ -1207,7 +1207,7 @@
     <a class="icon-btn" href="https://pump.fun" target="_blank" rel="noopener" aria-label="Pump.fun">
         <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c457abc0279df7fc3eb5a6_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(2).png" alt="Pump.fun" />
     </a>
-    <a class="about-btn" href="https://polymarketgirl.com/docs" target="_blank" rel="noopener">Docs</a>
+    <button class="about-btn" id="docsBtn" type="button">Docs</button>
     <button class="about-btn" id="aboutBtn" type="button">About</button>
 </div>
     
@@ -1522,19 +1522,25 @@
                     aboutModal.style.display = 'flex'; 
                 });
                 
-                if (aboutClose) {
-                    aboutClose.addEventListener('click', () => { 
-                        aboutModal.style.display = 'none'; 
-                    });
-                }
-                
-                aboutModal.addEventListener('click', (e) => { 
-                    if (e.target === aboutModal) {
-                        aboutModal.style.display = 'none'; 
-                    }
-                });
-            }
-        }
+               if (aboutClose) {
+    aboutClose.addEventListener('click', () => { 
+        aboutModal.style.display = 'none'; 
+    });
+}
+
+aboutModal.addEventListener('click', (e) => { 
+    if (e.target === aboutModal) {
+        aboutModal.style.display = 'none'; 
+    }
+});
+}
+
+const docsBtn = document.getElementById('docsBtn');
+if (docsBtn) {
+    docsBtn.addEventListener('click', () => {
+        window.open('https://polymarketgirl.com/docs', '_blank');
+    });
+}
 
         function askQuestion(question) {
             const messageInput = document.getElementById('messageInput');
@@ -1942,6 +1948,7 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
+
 
 
 
