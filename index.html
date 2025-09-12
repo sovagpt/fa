@@ -1495,53 +1495,54 @@
         }
 
         function setupEventListeners() {
-            const messageInput = document.getElementById('messageInput');
-            const sendButton = document.getElementById('sendButton');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
 
-            messageInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-
-            messageInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-            });
-
-            sendButton.addEventListener('click', sendMessage);
-            
-            // About modal handlers
-            const aboutBtn = document.getElementById('aboutBtn');
-            const aboutModal = document.getElementById('aboutModal');
-            const aboutClose = document.getElementById('aboutClose');
-            
-            if (aboutBtn && aboutModal) {
-                aboutBtn.addEventListener('click', () => { 
-                    aboutModal.style.display = 'flex'; 
-                });
-                
-               if (aboutClose) {
-    aboutClose.addEventListener('click', () => { 
-        aboutModal.style.display = 'none'; 
+    messageInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
     });
-}
 
-aboutModal.addEventListener('click', (e) => { 
-    if (e.target === aboutModal) {
-        aboutModal.style.display = 'none'; 
+    messageInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    });
+
+    sendButton.addEventListener('click', sendMessage);
+    
+    // About modal handlers
+    const aboutBtn = document.getElementById('aboutBtn');
+    const aboutModal = document.getElementById('aboutModal');
+    const aboutClose = document.getElementById('aboutClose');
+    
+    if (aboutBtn && aboutModal) {
+        aboutBtn.addEventListener('click', () => { 
+            aboutModal.style.display = 'flex'; 
+        });
+        
+        if (aboutClose) {
+            aboutClose.addEventListener('click', () => { 
+                aboutModal.style.display = 'none'; 
+            });
+        }
+
+        aboutModal.addEventListener('click', (e) => { 
+            if (e.target === aboutModal) {
+                aboutModal.style.display = 'none'; 
+            }
+        });
     }
-});
-}
 
-const docsBtn = document.getElementById('docsBtn');
-if (docsBtn) {
-    docsBtn.addEventListener('click', () => {
-        window.open('https://polymarketgirl.com/docs', '_blank');
-    });
+    // Docs button handler
+    const docsBtn = document.getElementById('docsBtn');
+    if (docsBtn) {
+        docsBtn.addEventListener('click', () => {
+            window.open('./docs.html', '_blank');
+        });
+    }
 }
-
         function askQuestion(question) {
             const messageInput = document.getElementById('messageInput');
             messageInput.value = question;
@@ -1948,6 +1949,7 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
+
 
 
 
