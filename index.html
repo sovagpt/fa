@@ -26,6 +26,106 @@
             flex-direction: column;
         }
 
+        .threeD-panel { 
+    position: fixed; 
+    left: 16px; 
+    bottom: 16px; 
+    width: 300px; 
+    height: 220px; 
+    border-radius: 16px; 
+    background: rgba(16,18,28,0.5); 
+    border: 1px solid rgba(255,255,255,0.12); 
+    backdrop-filter: blur(14px); 
+    -webkit-backdrop-filter: blur(14px); 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35); 
+    z-index: 900; 
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden; 
+}
+
+.threeD-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 12px 16px; 
+    border-bottom: 1px solid rgba(255,255,255,0.12); 
+    color: #e5e5e5; 
+    font-weight: 700; 
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
+    position: relative;
+}
+
+.threeD-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #2563eb, #1d4ed8, #7c3aed);
+}
+
+.panel-close { 
+    background: rgba(255,255,255,0.05); 
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #94a3b8; 
+    font-size: 14px; 
+    cursor: pointer; 
+    padding: 4px 8px;
+    transition: all 0.3s ease;
+}
+
+.panel-close:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+.threeD-body { 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #b8c1ce; 
+    font-size: 0.95rem;
+    padding: 20px;
+    text-align: center;
+}
+
+.threeD-placeholder { 
+    opacity: 0.8; 
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+
+.threeD-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 12px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+.threeD-coming-soon {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-style: italic;
+}
+
         /* Enhanced background glow */
         body::before,
         body::after { 
@@ -427,17 +527,27 @@
         }
 
         .footer-main {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 48px;
-            margin-bottom: 32px;
-        }
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    margin-bottom: 32px;
+    justify-items: center;
+}
 
         .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-description {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 500px;
+}
 
         .footer-logo {
             display: flex;
@@ -466,13 +576,6 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .footer-description {
-            color: #94a3b8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            max-width: 320px;
         }
 
         .footer-social {
@@ -1062,27 +1165,6 @@
                         <a href="#" class="footer-link">API Access</a>
                     </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <div class="footer-links">
-                        <a href="#" class="footer-link">Documentation</a>
-                        <a href="#" class="footer-link">Tutorials</a>
-                        <a href="#" class="footer-link">Market Guide</a>
-                        <a href="#" class="footer-link">Support</a>
-                    </div>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Community</h4>
-                    <div class="footer-links">
-                        <a href="#" class="footer-link">Discord</a>
-                        <a href="#" class="footer-link">Telegram</a>
-                        <a href="#" class="footer-link">Blog</a>
-                        <a href="#" class="footer-link">Newsletter</a>
-                    </div>
-                </div>
-            </div>
             
             <div class="footer-bottom">
                 <div class="footer-copyright">
@@ -1594,5 +1676,18 @@ Provide your analysis and predictions based on this market data.
             console.error('Unhandled promise rejection:', e.reason);
         });
     </script>
+    <!-- 3D Character Panel -->
+<div class="threeD-panel" id="threeDPanel">
+    <div class="threeD-header">
+        <span>3D Character</span>
+        <button class="panel-close" id="closeThreeDPanel" type="button">Close</button>
+    </div>
+    <div class="threeD-body">
+        <div class="threeD-icon">🤖</div>
+        <div class="threeD-placeholder">Interactive 3D avatar</div>
+        <div class="threeD-coming-soon">Coming soon...</div>
+    </div>
+</div>
 </body>
 </html>
+
