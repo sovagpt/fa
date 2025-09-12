@@ -142,8 +142,8 @@
             margin: 12px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            cursor: pointer;
             position: relative;
+            overflow: hidden;
         }
 
         .market-card:hover {
@@ -152,21 +152,30 @@
             transform: translateY(-2px);
         }
 
-        .market-card::before {
-            content: '🎯';
-            position: absolute;
-            top: 15px;
-            right: 18px;
-            font-size: 1.2rem;
+        .market-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
 
         .market-title {
             font-weight: 700;
             color: #1e293b;
-            margin-bottom: 12px;
             font-size: 1rem;
             line-height: 1.4;
-            padding-right: 35px;
+            flex: 1;
+            padding-right: 70px;
+        }
+
+        .market-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
         }
 
         .market-outcomes {
@@ -233,6 +242,50 @@
         .stat-value {
             font-weight: 700;
             color: #374151;
+        }
+
+        .market-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #cbd5e1;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .analyze-button {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .analyze-button:hover {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .polymarket-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .polymarket-button:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         .chat-input-container {
@@ -323,6 +376,23 @@
             30% { opacity: 1; transform: scale(1); }
         }
 
+        /* TYPEWRITER EFFECT STYLES */
+        .typing-text {
+            overflow: hidden;
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink-caret 1s infinite;
+            color: #6366f1;
+            font-weight: bold;
+        }
+
+        @keyframes blink-caret {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -373,18 +443,6 @@
             border-color: #6366f1;
         }
 
-        .loading-state {
-            display: none;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 10px;
-            margin: 10px 0;
-            color: #6366f1;
-            font-weight: 500;
-        }
-
         .ai-analysis {
             background: linear-gradient(135deg, #fef3c7, #fcd34d);
             border: 2px solid #f59e0b;
@@ -402,11 +460,29 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         .ai-analysis-content {
             color: #78350f;
             line-height: 1.6;
+        }
+
+        .polymarket-link {
+            padding: 5px 12px;
+            background: #10b981;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .polymarket-link:hover {
+            background: #059669;
+            transform: translateY(-1px);
         }
 
         @media (max-width: 768px) {
@@ -431,6 +507,19 @@
             .market-stats {
                 grid-template-columns: 1fr 1fr;
                 gap: 8px;
+            }
+
+            .market-actions {
+                flex-direction: column;
+            }
+
+            .market-title {
+                padding-right: 10px;
+            }
+
+            .ai-analysis-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -492,13 +581,8 @@
     <script>
         // Configuration
         const CONFIG = {
-            // Your GitHub raw JSON file URL
             POLYMARKET_DATA_URL: 'https://raw.githubusercontent.com/sovagpt/fa/main/polymarket_markets_full.json',
-            
-            // OpenRouter API configuration
             OPENROUTER_API_URL: 'https://openrouter.ai/api/v1/chat/completions',
-            
-            // Model to use for AI responses
             MODEL: 'anthropic/claude-3.5-sonnet:beta'
         };
 
@@ -553,7 +637,6 @@
             const messageInput = document.getElementById('messageInput');
             const sendButton = document.getElementById('sendButton');
 
-            // Input handling
             messageInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -561,13 +644,11 @@
                 }
             });
 
-            // Auto-resize textarea
             messageInput.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = Math.min(this.scrollHeight, 120) + 'px';
             });
 
-            // Send button
             sendButton.addEventListener('click', sendMessage);
         }
 
@@ -590,20 +671,15 @@
                 return;
             }
 
-            // Clear welcome message if it exists
             const welcomeMsg = document.querySelector('.welcome-message');
             if (welcomeMsg) {
                 welcomeMsg.remove();
             }
 
-            // Clear input
             input.value = '';
             input.style.height = 'auto';
             
-            // Add user message
             addMessage('user', message);
-            
-            // Show typing indicator
             showTypingIndicator();
             
             try {
@@ -621,16 +697,9 @@
         }
 
         async function getAIResponse(userMessage) {
-            // Find relevant markets based on user query
             const relevantMarkets = findRelevantMarkets(userMessage);
-            
-            // Create context for AI
             const context = createAIContext(userMessage, relevantMarkets);
-            
-            // Get AI response using OpenRouter
             const aiResponse = await callOpenRouterAPI(context);
-            
-            // Format response with market cards
             return formatResponseWithMarkets(aiResponse, relevantMarkets);
         }
 
@@ -638,7 +707,6 @@
             const queryLower = query.toLowerCase();
             const markets = polymarketData.markets || [];
             
-            // Define search keywords and categories
             const categories = {
                 'premier_league': ['premier league', 'epl', 'english premier', 'manchester', 'liverpool', 'chelsea', 'arsenal', 'tottenham'],
                 'football': ['football', 'soccer', 'fifa', 'world cup', 'uefa', 'champions league'],
@@ -652,23 +720,19 @@
                 'entertainment': ['oscar', 'emmy', 'grammy', 'movie', 'netflix', 'disney']
             };
             
-            let relevantMarkets = [];
             let searchScore = {};
             
-            // Score markets based on relevance
             markets.forEach((market, index) => {
                 const title = market.title.toLowerCase();
                 const description = market.description.toLowerCase();
                 let score = 0;
                 
-                // Direct keyword matching
                 const queryWords = queryLower.split(' ').filter(word => word.length > 2);
                 queryWords.forEach(word => {
                     if (title.includes(word)) score += 10;
                     if (description.includes(word)) score += 5;
                 });
                 
-                // Category matching
                 Object.entries(categories).forEach(([category, keywords]) => {
                     keywords.forEach(keyword => {
                         if (queryLower.includes(keyword)) {
@@ -679,7 +743,6 @@
                     });
                 });
                 
-                // Volume weighting (popular markets are more relevant)
                 if (market.volume24h > 1000000) score += 3;
                 if (market.volume24h > 5000000) score += 2;
                 
@@ -688,13 +751,11 @@
                 }
             });
             
-            // Sort by relevance score and get top results
-            relevantMarkets = Object.entries(searchScore)
+            let relevantMarkets = Object.entries(searchScore)
                 .sort(([, a], [, b]) => b - a)
                 .slice(0, 6)
                 .map(([index]) => markets[parseInt(index)]);
             
-            // If no relevant markets found, show highest volume markets
             if (relevantMarkets.length === 0) {
                 relevantMarkets = markets
                     .filter(m => m.volume24h > 0)
@@ -717,27 +778,26 @@
             }));
             
             return `
-        User Question: "${userMessage}"
+User Question: "${userMessage}"
 
-        Relevant Betting Markets Data:
-        ${JSON.stringify(marketData, null, 2)}
+Relevant Betting Markets Data:
+${JSON.stringify(marketData, null, 2)}
 
-        Instructions:
-        1. Analyze the provided betting markets data that are relevant to the user's question
-        2. Give your expert opinion on the most likely outcomes based on the market data
-        3. Explain your reasoning using the odds, volume, and market sentiment
-        4. Be conversational and engaging
-        5. If asked about who will win something, look at the market odds and give your prediction
-        6. Consider volume and liquidity as indicators of market confidence
-        7. Keep your response concise but informative
-        8. Don't mention that you're looking at JSON data - just analyze the markets naturally
+Instructions:
+1. Analyze the provided betting markets data that are relevant to the user's question
+2. Give your expert opinion on the most likely outcomes based on the market data
+3. Explain your reasoning using the odds, volume, and market sentiment
+4. Be conversational and engaging
+5. If asked about who will win something, look at the market odds and give your prediction
+6. Consider volume and liquidity as indicators of market confidence
+7. Keep your response concise but informative
+8. Don't mention that you're looking at JSON data - just analyze the markets naturally
 
-        Please provide your analysis and predictions based on this market data.
-        `;
+Please provide your analysis and predictions based on this market data.
+`;
         }
 
         async function callOpenRouterAPI(context) {
-            // Get API key from Vercel environment variable via a serverless function
             let apiKey;
             try {
                 const keyResponse = await fetch('/api/get-api-key');
@@ -787,7 +847,6 @@
             
             if (relevantMarkets.length > 0) {
                 formattedResponse += '<br><br><strong>📊 Relevant Markets:</strong><br>';
-                
                 relevantMarkets.forEach((market, index) => {
                     formattedResponse += createMarketCard(market, index);
                 });
@@ -799,9 +858,9 @@
         function createMarketCard(market, index) {
             const formatVolume = (vol) => {
                 if (!vol || vol === 0) return '$0';
-                if (vol > 1000000) return `${(vol / 1000000).toFixed(1)}M`;
-                if (vol > 1000) return `${(vol / 1000).toFixed(1)}K`;
-                return `${vol.toFixed(0)}`;
+                if (vol > 1000000) return `$${(vol / 1000000).toFixed(1)}M`;
+                if (vol > 1000) return `$${(vol / 1000).toFixed(1)}K`;
+                return `$${vol.toFixed(0)}`;
             };
             
             const formatPrice = (price) => `${(price * 100).toFixed(1)}%`;
@@ -809,13 +868,17 @@
             const outcome1 = market.outcomes[0];
             const outcome2 = market.outcomes[1];
             
-            // Determine which outcome is favored
             const outcome1Class = outcome1.price > 0.6 ? 'favored' : outcome1.price < 0.4 ? 'underdog' : 'neutral';
             const outcome2Class = outcome2.price > 0.6 ? 'favored' : outcome2.price < 0.4 ? 'underdog' : 'neutral';
             
+            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
+            
             return `
-                <div class="market-card" onclick="analyzeSpecificMarket('${market.id}', '${market.title.replace(/'/g, "\\'")}')">
-                    <div class="market-title">${market.title}</div>
+                <div class="market-card">
+                    <div class="market-header">
+                        <div class="market-title">${market.title}</div>
+                        ${market.image ? `<img src="${market.image}" alt="Market" class="market-image" onerror="this.style.display='none'">` : ''}
+                    </div>
                     <div class="market-outcomes">
                         <div class="outcome ${outcome1Class}">
                             ${outcome1.name}: ${formatPrice(outcome1.price)}
@@ -838,6 +901,14 @@
                             <span class="stat-value">${formatVolume(market.liquidity)}</span>
                         </div>
                     </div>
+                    <div class="market-actions">
+                        <button class="action-button analyze-button" onclick="analyzeSpecificMarket('${market.id}', '${market.title.replace(/'/g, "\\'")}')">
+                            🤖 AI Analysis
+                        </button>
+                        <a href="${polymarketUrl}" target="_blank" class="action-button polymarket-button">
+                            📈 Open in Polymarket
+                        </a>
+                    </div>
                 </div>
             `;
         }
@@ -846,9 +917,7 @@
             const market = polymarketData.markets.find(m => m.id === marketId);
             if (!market) return;
             
-            // Add user message showing they clicked on this market
             addMessage('user', `Tell me more about: ${marketTitle}`);
-            
             showTypingIndicator();
             
             try {
@@ -864,33 +933,35 @@
 
         async function getDetailedMarketAnalysis(market) {
             const context = `
-        Provide a detailed analysis of this specific betting market:
+Provide a detailed analysis of this specific betting market:
 
-        Title: ${market.title}
-        Description: ${market.description}
-        Outcomes: ${JSON.stringify(market.outcomes)}
-        24h Volume: ${market.volume24h}
-        Total Volume: ${market.volumeTotal}
-        Liquidity: ${market.liquidity}
-        Favored Outcome: ${market.favoredOutcome}
-        End Date: ${market.endTime}
+Title: ${market.title}
+Description: ${market.description}
+Outcomes: ${JSON.stringify(market.outcomes)}
+24h Volume: ${market.volume24h}
+Total Volume: ${market.volumeTotal}
+Liquidity: ${market.liquidity}
+Favored Outcome: ${market.favoredOutcome}
+End Date: ${market.endTime}
 
-        Please provide:
-        1. What this market is betting on (in simple terms)
-        2. Current odds analysis
-        3. Your prediction and confidence level
-        4. Key factors that could influence the outcome
-        5. Risk assessment
+Please provide:
+1. What this market is betting on (in simple terms)
+2. Current odds analysis
+3. Your prediction and confidence level
+4. Key factors that could influence the outcome
+5. Risk assessment
 
-        Be detailed and specific in your analysis.
-        `;
+Be detailed and specific in your analysis.
+`;
 
             const aiResponse = await callOpenRouterAPI(context);
+            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
             
             return `
                 <div class="ai-analysis">
                     <div class="ai-analysis-header">
-                        🤖 Detailed Market Analysis
+                        <span>🤖 Detailed Market Analysis</span>
+                        <a href="${polymarketUrl}" target="_blank" class="polymarket-link">📈 Open in Polymarket</a>
                     </div>
                     <div class="ai-analysis-content">
                         ${aiResponse}
@@ -901,6 +972,7 @@
             `;
         }
 
+        // TYPEWRITER EFFECT FUNCTION
         function addMessage(sender, content) {
             const messagesContainer = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
@@ -912,17 +984,81 @@
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
-            contentDiv.innerHTML = content;
+            
+            if (sender === 'bot') {
+                // Start typewriter effect for bot messages
+                startTypewriterEffect(contentDiv, content);
+            } else {
+                contentDiv.innerHTML = content;
+            }
             
             messageDiv.appendChild(avatar);
             messageDiv.appendChild(contentDiv);
             messagesContainer.appendChild(messageDiv);
             
-            // Scroll to bottom
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            
-            // Add to chat history
             chatHistory.push({ sender, content });
+        }
+
+        function startTypewriterEffect(element, htmlContent) {
+            element.innerHTML = '';
+            element.classList.add('typing-cursor');
+            
+            let currentIndex = 0;
+            const speed = 20; // milliseconds per character
+            let displayText = '';
+            
+            // Strip HTML tags for typing effect, but keep track of where they should be
+            const textOnly = htmlContent.replace(/<[^>]*>/g, '');
+            
+            function typeNextChar() {
+                if (currentIndex < textOnly.length) {
+                    displayText += textOnly[currentIndex];
+                    
+                    // Find the corresponding position in original HTML
+                    let htmlToShow = '';
+                    let textIndex = 0;
+                    let htmlIndex = 0;
+                    
+                    while (htmlIndex < htmlContent.length && textIndex <= currentIndex) {
+                        if (htmlContent[htmlIndex] === '<') {
+                            // Add the entire HTML tag
+                            const tagEnd = htmlContent.indexOf('>', htmlIndex);
+                            if (tagEnd !== -1) {
+                                htmlToShow += htmlContent.substring(htmlIndex, tagEnd + 1);
+                                htmlIndex = tagEnd + 1;
+                            } else {
+                                htmlIndex++;
+                            }
+                        } else {
+                            htmlToShow += htmlContent[htmlIndex];
+                            if (htmlContent[htmlIndex] !== ' ' || textIndex < currentIndex) {
+                                textIndex++;
+                            }
+                            htmlIndex++;
+                        }
+                    }
+                    
+                    element.innerHTML = htmlToShow;
+                    currentIndex++;
+                    
+                    // Auto-scroll as we type
+                    const messagesContainer = document.getElementById('chatMessages');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    
+                    setTimeout(typeNextChar, speed);
+                } else {
+                    // Typing complete - show full HTML content
+                    element.innerHTML = htmlContent;
+                    element.classList.remove('typing-cursor');
+                    
+                    // Final scroll
+                    const messagesContainer = document.getElementById('chatMessages');
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }
+            
+            typeNextChar();
         }
 
         function showTypingIndicator() {
