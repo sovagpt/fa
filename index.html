@@ -1478,67 +1478,77 @@
         }
 
         function findRelevantMarkets(query) {
-            const queryLower = query.toLowerCase();
-            const markets = polymarketData.markets || [];
-            
-            const categories = {
-                'premier_league': ['premier league', 'epl', 'english premier', 'manchester', 'liverpool', 'chelsea', 'arsenal', 'tottenham'],
-                'football': ['football', 'soccer', 'fifa', 'world cup', 'uefa', 'champions league'],
-                'american_football': ['nfl', 'super bowl', 'american football', 'chiefs', 'cowboys', 'patriots'],
-                'basketball': ['nba', 'basketball', 'lakers', 'warriors', 'lebron', 'finals'],
-                'baseball': ['mlb', 'baseball', 'yankees', 'dodgers', 'world series'],
-                'fed_rates': ['fed', 'federal reserve', 'interest rate', 'fomc', 'jerome powell'],
-                'politics': ['election', 'president', 'biden', 'trump', 'congress', 'senate'],
-                'crypto': ['bitcoin', 'ethereum', 'crypto', 'btc', 'eth', 'binance', 'coinbase'],
-                'stocks': ['stock', 'nasdaq', 'dow', 'sp500', 's&p', 'apple', 'tesla', 'nvidia'],
-                'entertainment': ['oscar', 'emmy', 'grammy', 'movie', 'netflix', 'disney']
-            };
-            
-            let searchScore = {};
-            
-            markets.forEach((market, index) => {
-                const title = market.title.toLowerCase();
-                const description = market.description.toLowerCase();
-                let score = 0;
-                
-                const queryWords = queryLower.split(' ').filter(word => word.length > 2);
-                queryWords.forEach(word => {
-                    if (title.includes(word)) score += 10;
-                    if (description.includes(word)) score += 5;
-                });
-                
-                Object.entries(categories).forEach(([category, keywords]) => {
-                    keywords.forEach(keyword => {
-                        if (queryLower.includes(keyword)) {
-                            if (title.includes(keyword) || description.includes(keyword)) {
-                                score += 15;
-                            }
-                        }
-                    });
-                });
-                
-                if (market.volume24h > 1000000) score += 3;
-                if (market.volume24h > 5000000) score += 2;
-                
-                if (score > 0) {
-                    searchScore[index] = score;
+    const queryLower = query.toLowerCase();
+    const markets = polymarketData.markets || [];
+    
+    // Expanded categories for better matching
+    const categories = {
+        'premier_league': ['premier league', 'epl', 'english premier', 'manchester', 'liverpool', 'chelsea', 'arsenal', 'tottenham', 'city', 'united'],
+        'football': ['football', 'soccer', 'fifa', 'world cup', 'uefa', 'champions league', 'euro'],
+        'american_football': ['nfl', 'super bowl', 'american football', 'chiefs', 'cowboys', 'patriots', 'playoffs'],
+        'basketball': ['nba', 'basketball', 'lakers', 'warriors', 'lebron', 'finals', 'playoffs'],
+        'baseball': ['mlb', 'baseball', 'yankees', 'dodgers', 'world series'],
+        'fed_rates': ['fed', 'federal reserve', 'interest rate', 'fomc', 'jerome powell', 'inflation'],
+        'politics': ['election', 'president', 'biden', 'trump', 'congress', 'senate', 'republican', 'democrat'],
+        'crypto': ['bitcoin', 'ethereum', 'crypto', 'btc', 'eth', 'binance', 'coinbase', 'defi'],
+        'stocks': ['stock', 'nasdaq', 'dow', 'sp500', 's&p', 'apple', 'tesla', 'nvidia', 'market'],
+        'entertainment': ['oscar', 'emmy', 'grammy', 'movie', 'netflix', 'disney', 'award'],
+        'weather': ['weather', 'hurricane', 'storm', 'temperature', 'climate'],
+        'general': ['will', 'happen', 'outcome', 'result', 'winner', 'prediction', 'forecast']
+    };
+    
+    let searchScore = {};
+    
+    markets.forEach((market, index) => {
+        const title = market.title.toLowerCase();
+        const description = market.description.toLowerCase();
+        let score = 0;
+        
+        // Direct word matches
+        const queryWords = queryLower.split(' ').filter(word => word.length > 2);
+        queryWords.forEach(word => {
+            if (title.includes(word)) score += 15;
+            if (description.includes(word)) score += 8;
+        });
+        
+        // Category matches
+        Object.entries(categories).forEach(([category, keywords]) => {
+            keywords.forEach(keyword => {
+                if (queryLower.includes(keyword)) {
+                    if (title.includes(keyword) || description.includes(keyword)) {
+                        score += 20;
+                    }
                 }
             });
-            
-            let relevantMarkets = Object.entries(searchScore)
-                .sort(([, a], [, b]) => b - a)
-                .slice(0, 6)
-                .map(([index]) => markets[parseInt(index)]);
-            
-            if (relevantMarkets.length === 0) {
-                relevantMarkets = markets
-                    .filter(m => m.volume24h > 0)
-                    .sort((a, b) => (b.volume24h || 0) - (a.volume24h || 0))
-                    .slice(0, 5);
-            }
-            
-            return relevantMarkets;
+        });
+        
+        // Volume bonuses (popular markets are more relevant)
+        if (market.volume24h > 1000000) score += 5;
+        if (market.volume24h > 5000000) score += 3;
+        
+        // Recent activity bonus
+        if (market.liquidity > 100000) score += 2;
+        
+        if (score > 0) {
+            searchScore[index] = score;
         }
+    });
+    
+    let relevantMarkets = Object.entries(searchScore)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 4) // Show max 4 markets to avoid clutter
+        .map(([index]) => markets[parseInt(index)]);
+    
+    // Fallback: if no matches, show trending markets
+    if (relevantMarkets.length === 0) {
+        relevantMarkets = markets
+            .filter(m => m.volume24h > 0)
+            .sort((a, b) => (b.volume24h || 0) - (a.volume24h || 0))
+            .slice(0, 3);
+    }
+    
+    return relevantMarkets;
+}
 
         function createAIContext(userMessage, relevantMarkets) {
             const marketData = relevantMarkets.map(market => ({
@@ -1618,36 +1628,54 @@ Provide your analysis and predictions based on this market data.
         }
 
         function addMessage(sender, content, relevantMarkets = null) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    if (sender === "user") { 
+        avatar.classList.add("avatar-user"); 
+        avatar.textContent = "YOU"; 
+    } else { 
+        avatar.classList.add("avatar-bot"); 
+        avatar.innerHTML = "<img src=\"https://placehold.co/44x44/000000/ffffff?text=AI\" alt=\"PolyGF\" />"; 
+    }
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    contentDiv.innerHTML = content;
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(contentDiv);
+    messagesContainer.appendChild(messageDiv);
+    
+    // ALWAYS show markets for bot messages (this is the key change)
+    if (sender === 'bot' && relevantMarkets && relevantMarkets.length > 0) {
+        setTimeout(() => {
+            const marketsSection = document.createElement('div');
+            marketsSection.className = 'markets-section';
+            marketsSection.innerHTML = `
+                <div class="markets-header">
+                    📊 Relevant Markets
+                </div>
+            `;
             
-            const avatar = document.createElement('div');
-            avatar.className = 'message-avatar';
-            if (sender === "user") { 
-                avatar.classList.add("avatar-user"); 
-                avatar.textContent = "YOU"; 
-            } else { 
-                avatar.classList.add("avatar-bot"); 
-                avatar.innerHTML = "<img src=\"https://placehold.co/44x44/000000/ffffff?text=AI\" alt=\"PolyGF\" />"; 
-            }
+            relevantMarkets.forEach((market) => {
+                const marketDiv = document.createElement('div');
+                marketDiv.innerHTML = createMarketCard(market, 0);
+                marketsSection.appendChild(marketDiv);
+            });
             
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            
-            if (sender === 'bot') {
-                contentDiv.innerHTML = content;
-            } else {
-                contentDiv.innerHTML = content;
-            }
-            
-            messageDiv.appendChild(avatar);
-            messageDiv.appendChild(contentDiv);
-            messagesContainer.appendChild(messageDiv);
+            contentDiv.appendChild(marketsSection);
             
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            chatHistory.push({ sender, content });
-        }
+        }, 500); // Small delay for better UX
+    }
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    chatHistory.push({ sender, content });
+}
 
         function showTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
@@ -1683,5 +1711,6 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
+
 
 
