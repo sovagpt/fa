@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyGF Documentation</title>
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c454e3beed35c5e04d73c0_15a1cddcb8c67f8a9984936fd9e80610.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: 
+                radial-gradient(1200px 600px at 10% 10%, rgba(37, 99, 235, 0.18), transparent 40%),
+                radial-gradient(900px 500px at 80% 20%, rgba(0, 212, 255, 0.16), transparent 45%),
+                radial-gradient(800px 600px at 40% 85%, rgba(155, 89, 182, 0.14), transparent 45%),
+                linear-gradient(135deg, #090d19 0%, #0b0f1f 50%, #0a0d18 100%);
+            background-size: 200% 200%;
+            animation: bgShift 48s ease-in-out infinite alternate;
+            min-height: 100vh;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        @keyframes bgShift { 
+            0% { background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%; } 
+            100% { background-position: 50% 50%, 50% 50%, 50% 50%, 100% 100%; } 
+        }
+
+        body::before,
+        body::after { 
+            content: ""; 
+            position: fixed; 
+            z-index: -1; 
+            width: 60vmax; 
+            height: 60vmax; 
+            filter: blur(70px); 
+            opacity: 0.35; 
+            transform: translateZ(0); 
+            pointer-events: none; 
+        }
+
+        body::before { 
+            top: -20vmax; 
+            left: -10vmax; 
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.45), rgba(29, 78, 216, 0.25), transparent 60%); 
+            animation: floatA 26s ease-in-out infinite; 
+        }
+
+        body::after { 
+            bottom: -25vmax; 
+            right: -15vmax; 
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.35), rgba(155, 89, 182, 0.25), transparent 60%); 
+            animation: floatB 34s ease-in-out infinite; 
+        }
+
+        @keyframes floatA { 
+            0%, 100% { transform: translate(0,0) scale(1);} 
+            50% { transform: translate(3vmax,2vmax) scale(1.05);} 
+        }
+
+        @keyframes floatB { 
+            0%, 100% { transform: translate(0,0) scale(1);} 
+            50% { transform: translate(-3vmax,-2vmax) scale(1.05);} 
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: rgba(16, 18, 28, 0.38);
+            backdrop-filter: blur(22px) saturate(120%);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #94a3b8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .nav-tab.active,
+        .nav-tab:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: rgba(37, 99, 235, 0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .doc-card {
+            background: rgba(16, 18, 28, 0.38);
+            backdrop-filter: blur(22px) saturate(120%);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #2563eb, #1d4ed8, #7c3aed);
+        }
+
+        .doc-card h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .doc-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #93c5fd;
+            margin: 24px 0 12px 0;
+        }
+
+        .doc-card p {
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'Rust';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .code-block pre {
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .keyword { color: #c792ea; }
+        .string { color: #c3e88d; }
+        .comment { color: #546e7a; font-style: italic; }
+        .function { color: #82aaff; }
+        .type { color: #ffcb6b; }
+        .number { color: #f78c6c; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(37, 99, 235, 0.05);
+            border-color: rgba(37, 99, 235, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .feature-card h4 {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .warning-box h4 {
+            color: #f87171;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .warning-box p {
+            color: #fca5a5;
+            font-size: 0.95rem;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .doc-card {
+                padding: 20px;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-link">← Back to Chat</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>PolyGF Documentation</h1>
+            <p>Advanced AI trading system architecture and prediction market analysis framework</p>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('architecture')">System Architecture</div>
+            <div class="nav-tab" onclick="showSection('algorithms')">Trading Algorithms</div>
+            <div class="nav-tab" onclick="showSection('streaming')">Live Trading</div>
+            <div class="nav-tab" onclick="showSection('api')">API Reference</div>
+        </div>
+
+        <div id="architecture" class="content-section active">
+            <div class="doc-card">
+                <h2>🏗️ Core System Architecture</h2>
+                <p>PolyGF is built on a high-performance Rust backend with WebAssembly integration for browser-based real-time analysis. The system employs a multi-threaded architecture optimized for low-latency market data processing.</p>
+                
+                <h3>Market Data Ingestion Engine</h3>
+                <div class="code-block">
+                    <pre><code><span class="keyword">use</span> <span class="type">tokio</span>::<span class="type">sync</span>::<span class="type">mpsc</span>;
+<span class="keyword">use</span> <span class="type">serde</span>::{<span class="type">Deserialize</span>, <span class="type">Serialize</span>};
+<span class="keyword">use</span> <span class="type">rust_decimal</span>::<span class="type">Decimal</span>;
+
+<span class="comment">// Real-time market data structure</span>
+<span class="keyword">#[derive(Debug, Clone, Serialize, Deserialize)]</span>
+<span class="keyword">pub struct</span> <span class="type">MarketTick</span> {
+    <span class="keyword">pub</span> market_id: <span class="type">String</span>,
+    <span class="keyword">pub</span> timestamp: <span class="type">u64</span>,
+    <span class="keyword">pub</span> yes_price: <span class="type">Decimal</span>,
+    <span class="keyword">pub</span> no_price: <span class="type">Decimal</span>,
+    <span class="keyword">pub</span> volume_24h: <span class="type">Decimal</span>,
+    <span class="keyword">pub</span> liquidity: <span class="type">Decimal</span>,
+    <span class="keyword">pub</span> price_change: <span class="type">Decimal</span>,
+}
+
+<span class="keyword">pub struct</span> <span class="type">MarketAnalyzer</span> {
+    data_stream: <span class="type">mpsc::Receiver</span>&lt;<span class="type">MarketTick</span>&gt;,
+    signal_processor: <span class="type">SignalProcessor</span>,
+    risk_manager: <span class="type">RiskManager</span>,
+}
+
+<span class="keyword">impl</span> <span class="type">MarketAnalyzer</span> {
+    <span class="keyword">pub async fn</span> <span class="function">process_market_stream</span>(&<span class="keyword">mut</span> <span class="keyword">self</span>) {
+        <span class="keyword">while let</span> <span class="type">Some</span>(tick) = <span class="keyword">self</span>.data_stream.<span class="function">recv</span>().<span class="keyword">await</span> {
+            <span class="keyword">let</span> signal = <span class="keyword">self</span>.signal_processor.<span class="function">analyze</span>(&tick);
+            
+            <span class="keyword">if let</span> <span class="type">Some</span>(trade_signal) = signal {
+                <span class="keyword">let</span> risk_assessment = <span class="keyword">self</span>.risk_manager
+                    .<span class="function">evaluate_trade</span>(&trade_signal);
+                    
+                <span class="keyword">if</span> risk_assessment.is_acceptable() {
+                    <span class="keyword">self</span>.<span class="function">execute_trade</span>(trade_signal).<span class="keyword">await</span>;
+                }
+            }
+        }
+    }
+}</code></pre>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <div class="stat-value">500+</div>
+                        <div class="stat-label">Markets Monitored</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">< 50ms</div>
+                        <div class="stat-label">Latency</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Operation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h2>🧠 Neural Network Integration</h2>
+                <p>The system leverages both traditional quantitative models and modern machine learning techniques for market prediction.</p>
+                
+                <div class="code-block">
+                    <pre><code><span class="keyword">use</span> <span class="type">candle_core</span>::{<span class="type">Device</span>, <span class="type">Tensor</span>};
+<span class="keyword">use</span> <span class="type">candle_nn</span>::{<span class="type">Linear</span>, <span class="type">Module</span>};
+
+<span class="keyword">#[derive(Debug)]</span>
+<span class="keyword">pub struct</span> <span class="type">PredictionModel</span> {
+    input_layer: <span class="type">Linear</span>,
+    hidden_layers: <span class="type">Vec</span>&lt;<span class="type">Linear</span>&gt;,
+    output_layer: <span class="type">Linear</span>,
+    device: <span class="type">Device</span>,
+}
+
+<span class="keyword">impl</span> <span class="type">PredictionModel</span> {
+    <span class="keyword">pub fn</span> <span class="function">predict_market_movement</span>(
+        &<span class="keyword">self</span>, 
+        features: &<span class="type">Tensor</span>
+    ) -> <span class="type">Result</span>&lt;<span class="type">Tensor</span>, <span class="type">Box</span>&lt;<span class="keyword">dyn</span> <span class="type">std::error::Error</span>&gt;&gt; {
+        <span class="keyword">let</span> <span class="keyword">mut</span> x = <span class="keyword">self</span>.input_layer.<span class="function">forward</span>(features)?;
+        
+        <span class="comment">// Forward pass through hidden layers with ReLU activation</span>
+        <span class="keyword">for</span> layer <span class="keyword">in</span> &<span class="keyword">self</span>.hidden_layers {
+            x = layer.<span class="function">forward</span>(&x)?.<span class="function">relu</span>()?;
+        }
+        
+        <span class="comment">// Output probability distribution</span>
+        <span class="keyword">let</span> output = <span class="keyword">self</span>.output_layer.<span class="function">forward</span>(&x)?.<span class="function">softmax</span>(<span class="number">1</span>)?;
+        <span class="type">Ok</span>(output)
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="algorithms" class="content-section">
+            <div class="doc-card">
+                <h2>📊 Trading Algorithm Suite</h2>
+                <p>PolyGF employs multiple sophisticated algorithms for different market conditions and opportunity types.</p>
+                
+                <h3>Kelly Criterion Implementation</h3>
+                <div class="code-block">
+                    <pre><code><span class="keyword">use</span> <span class="type">rust_decimal</span>::<span class="type">Decimal</span>;
+<span class="keyword">use</span> <span class="type">rust_decimal_macros</span>::<span class="function">dec</span>;
+
+<span class="keyword">#[derive(Debug, Clone)]</span>
+<span class="keyword">pub struct</span> <span class="type">KellyCriterion</span> {
+    win_probability: <span class="type">Decimal</span>,
+    average_win: <span class="type">Decimal</span>,
+    average_loss: <span class="type">Decimal</span>,
+    max_allocation: <span class="type">Decimal</span>,
+}
+
+<span class="keyword">impl</span> <span class="type">KellyCriterion</span> {
+    <span class="keyword">pub fn</span> <span class="function">calculate_optimal_bet_size</span>(
+        &<span class="keyword">self</span>,
+        market_odds: <span class="type">Decimal</span>,
+        confidence_level: <span class="type">Decimal</span>
+    ) -> <span class="type">Decimal</span> {
+        <span class="keyword">let</span> b = market_odds - <span class="function">dec!</span>(<span class="number">1.0</span>); <span class="comment">// Net odds</span>
+        <span class="keyword">let</span> p = <span class="keyword">self</span>.win_probability * confidence_level;
+        <span class="keyword">let</span> q = <span class="function">dec!</span>(<span class="number">1.0</span>) - p;
+        
+        <span class="comment">// Kelly formula: f = (bp - q) / b</span>
+        <span class="keyword">let</span> kelly_fraction = (b * p - q) / b;
+        
+        <span class="comment">// Apply safety constraints</span>
+        <span class="keyword">let</span> constrained_fraction = kelly_fraction
+            .<span class="function">min</span>(<span class="keyword">self</span>.max_allocation)
+            .<span class="function">max</span>(<span class="function">dec!</span>(<span class="number">0.0</span>));
+            
+        constrained_fraction
+    }
+    
+    <span class="keyword">pub fn</span> <span class="function">calculate_sharpe_ratio</span>(
+        &<span class="keyword">self</span>,
+        returns: &[<span class="type">Decimal</span>],
+        risk_free_rate: <span class="type">Decimal</span>
+    ) -> <span class="type">Decimal</span> {
+        <span class="keyword">let</span> mean_return = returns.<span class="function">iter</span>().<span class="function">sum</span>::&lt;<span class="type">Decimal</span>&gt;() 
+            / <span class="type">Decimal</span>::<span class="function">from</span>(returns.<span class="function">len</span>());
+        <span class="keyword">let</span> excess_return = mean_return - risk_free_rate;
+        
+        <span class="keyword">let</span> variance = returns.<span class="function">iter</span>()
+            .<span class="function">map</span>(|r| (r - mean_return).powi(<span class="number">2</span>))
+            .<span class="function">sum</span>::&lt;<span class="type">Decimal</span>&gt;() / <span class="type">Decimal</span>::<span class="function">from</span>(returns.<span class="function">len</span>());
+        
+        <span class="keyword">let</span> std_dev = variance.<span class="function">sqrt</span>().<span class="function">unwrap</span>();
+        excess_return / std_dev
+    }
+}</code></pre>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Momentum Analysis</h4>
+                        <p>Real-time trend detection using price action, volume, and liquidity momentum indicators.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h4>Arbitrage Detection</h4>
+                        <p>Cross-market arbitrage opportunities identified through automated price comparison algorithms.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Mean Reversion</h4>
+                        <p>Statistical models identifying overbought/oversold conditions in prediction markets.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h4>Event-Driven Signals</h4>
+                        <p>News sentiment analysis and event correlation for market-moving information detection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <h2>🛡️ Risk Management Framework</h2>
+                <div class="code-block">
+                    <pre><code><span class="keyword">#[derive(Debug, Clone)]</span>
+<span class="keyword">pub struct</span> <span class="type">RiskManager</span> {
+    max_position_size: <span class="type">Decimal</span>,
+    max_daily_loss: <span class="type">Decimal</span>,
+    correlation_limits: <span class="type">HashMap</span>&lt;<span class="type">String</span>, <span class="type">Decimal</span>&gt;,
+    var_calculator: <span class="type">VaRCalculator</span>,
+}
+
+<span class="keyword">impl</span> <span class="type">RiskManager</span> {
+    <span class="keyword">pub fn</span> <span class="function">evaluate_portfolio_risk</span>(
+        &<span class="keyword">self</span>,
+        positions: &[<span class="type">Position</span>]
+    ) -> <span class="type">RiskAssessment</span> {
+        <span class="keyword">let</span> total_exposure = positions.<span class="function">iter</span>()
+            .<span class="function">map</span>(|p| p.notional_value)
+            .<span class="function">sum</span>::&lt;<span class="type">Decimal</span>&gt;();
+            
+        <span class="keyword">let</span> portfolio_var = <span class="keyword">self</span>.var_calculator
+            .<span class="function">calculate_portfolio_var</span>(positions);
+            
+        <span class="keyword">let</span> concentration_risk = <span class="keyword">self</span>
+            .<span class="function">calculate_concentration_risk</span>(positions);
+            
+        <span class="type">RiskAssessment</span> {
+            total_exposure,
+            value_at_risk: portfolio_var,
+            concentration_score: concentration_risk,
+            is_acceptable: <span class="keyword">self</span>.<span class="function">is_within_limits</span>(&portfolio_var),
+        }
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="streaming" class="content-section">
+            <div class="doc-card">
+                <h2>🎥 Live Trading Stream Implementation</h2>
+                <p>PolyGF will feature complete transparency through live streaming of all trading decisions, analysis, and performance metrics.</p>
+                
+                <h3>Streaming Architecture</h3>
+                <div class="code-block">
+                    <pre><code><span class="keyword">use</span> <span class="type">tokio_tungstenite</span>::{<span class="type">WebSocketStream</span>, <span class="type">Message</span>};
+<span class="keyword">use</span> <span class="type">futures_util</span>::{<span class="type">SinkExt</span>, <span class="type">StreamExt</span>};
+
+<span class="keyword">#[derive(Debug, Serialize)]</span>
+<span class="keyword">pub struct</span> <span class="type">LiveTradingEvent</span> {
+    timestamp: <span class="type">u64</span>,
+    event_type: <span class="type">TradingEventType</span>,
+    market_id: <span class="type">String</span>,
+    analysis: <span class="type">MarketAnalysis</span>,
+    decision: <span class="type">TradingDecision</span>,
+    confidence: <span class="type">Decimal</span>,
+    reasoning: <span class="type">String</span>,
+}
+
+<span class="keyword">#[derive(Debug, Serialize)]</span>
+<span class="keyword">pub enum</span> <span class="type">TradingEventType</span> {
+    <span class="type">MarketScan</span>,
+    <span class="type">SignalDetected</span>,
+    <span class="type">RiskEvaluation</span>,
+    <span class="type">TradeExecution</span>,
+    <span class="type">PositionUpdate</span>,
+    <span class="type">PerformanceMetrics</span>,
+}
+
+<span class="keyword">pub struct</span> <span class="type">LiveStreamManager</span> {
+    viewers: <span class="type">Vec</span>&lt;<span class="type">WebSocketStream</span>&lt
