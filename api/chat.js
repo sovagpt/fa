@@ -1,8 +1,7 @@
 // Configuration
 const CONFIG = {
-    // Replace this URL with your GitHub raw JSON file URL
-    // Example: https://raw.githubusercontent.com/yourusername/yourrepo/main/polymarket-data.json
-    POLYMARKET_DATA_URL: 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/polymarket-data.json',
+    // Your GitHub raw JSON file URL
+    POLYMARKET_DATA_URL: 'https://raw.githubusercontent.com/sovagpt/fa/main/polymarket_markets_full.json',
     
     // OpenRouter API configuration
     OPENROUTER_API_URL: 'https://openrouter.ai/api/v1/chat/completions',
