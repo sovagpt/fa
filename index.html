@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -620,9 +620,34 @@
         .chat-messages::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+            /* Enhanced background glow */
+        body::before,
+        body::after { content: ""; position: fixed; z-index: -1; width: 60vmax; height: 60vmax; filter: blur(70px); opacity: 0.35; transform: translateZ(0); pointer-events: none; }
+        body::before { top: -20vmax; left: -10vmax; background: radial-gradient(circle at center, rgba(37, 99, 235, 0.45), rgba(29, 78, 216, 0.25), transparent 60%); animation: floatA 26s ease-in-out infinite; }
+        body::after { bottom: -25vmax; right: -15vmax; background: radial-gradient(circle at center, rgba(0, 212, 255, 0.35), rgba(155, 89, 182, 0.25), transparent 60%); animation: floatB 34s ease-in-out infinite; }
+        @keyframes floatA { 0%, 100% { transform: translate(0,0) scale(1);} 50% { transform: translate(3vmax,2vmax) scale(1.05);} }
+        @keyframes floatB { 0%, 100% { transform: translate(0,0) scale(1);} 50% { transform: translate(-3vmax,-2vmax) scale(1.05);} }
+        .top-right-icons { position: fixed; top: 18px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
+        .icon-btn { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; }
+        .icon-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+        .icon-btn img { width: 22px; height: 22px; object-fit: contain; display: block; }
+        .chat-container { background: rgba(16, 18, 28, 0.38); backdrop-filter: blur(22px) saturate(120%); -webkit-backdrop-filter: blur(22px) saturate(120%); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 25px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); }
+        .chat-container::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+        .chat-header { background: transparent; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        /* Hide in-card and analysis Polymarket links */
+        .polymarket-button, .polymarket-link { display: none !important; }
     </style>
 </head>
-<body>
+
+    <!-- Top-right social buttons -->
+    <div class="top-right-icons">
+        <a class="icon-btn" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1).png" alt="Twitter" />
+        </a>
+        <a class="icon-btn" href="https://polymarket.com" target="_blank" rel="noopener" aria-label="Polymarket">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
+        </a>
+    </div>
     <div class="chat-container">
         <div class="chat-header">
             <h1>Polymarket AI Advisor</h1>
@@ -635,16 +660,16 @@
                 <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
                 <div class="example-questions">
                     <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
-                        ⚽ Premier League winner predictions
+                        âš½ Premier League winner predictions
                     </div>
                     <div class="example-question" onclick="askQuestion('What are the Fed interest rate predictions?')">
-                        📊 Federal Reserve rate predictions  
+                        ðŸ“Š Federal Reserve rate predictions  
                     </div>
                     <div class="example-question" onclick="askQuestion('Show me the highest volume markets')">
-                        📈 Highest volume betting markets
+                        ðŸ“ˆ Highest volume betting markets
                     </div>
                     <div class="example-question" onclick="askQuestion('What NFL games should I bet on?')">
-                        🏈 NFL betting recommendations
+                        ðŸˆ NFL betting recommendations
                     </div>
                 </div>
             </div>
@@ -666,7 +691,7 @@
                     rows="1"
                 ></textarea>
                 <button class="send-button" id="sendButton" onclick="sendMessage()">
-                    →
+                    â†’
                 </button>
             </div>
         </div>
@@ -997,10 +1022,10 @@ Provide your analysis and predictions based on this market data.
                     </div>
                     <div class="market-actions">
                         <button class="action-button analyze-button" onclick="analyzeSpecificMarket('${market.id}', '${market.title.replace(/'/g, "\\'")}')">
-                            🤖 AI Analysis
+                            ðŸ¤– AI Analysis
                         </button>
                         <a href="${polymarketUrl}" target="_blank" class="action-button polymarket-button">
-                            📈 Open in Polymarket
+                            ðŸ“ˆ Open in Polymarket
                         </a>
                     </div>
                 </div>
@@ -1054,8 +1079,8 @@ Format your response clearly with proper structure and paragraphs.
             return `
                 <div class="ai-analysis">
                     <div class="ai-analysis-header">
-                        <span>🤖 Detailed Market Analysis</span>
-                        <a href="${polymarketUrl}" target="_blank" class="polymarket-link">📈 Open in Polymarket</a>
+                        <span>ðŸ¤– Detailed Market Analysis</span>
+                        <a href="${polymarketUrl}" target="_blank" class="polymarket-link">ðŸ“ˆ Open in Polymarket</a>
                     </div>
                     <div class="ai-analysis-content">
                         ${formatAIResponse(aiResponse)}
@@ -1139,7 +1164,7 @@ Format your response clearly with proper structure and paragraphs.
                             marketsSection.className = 'markets-section';
                             marketsSection.innerHTML = `
                                 <div class="markets-header">
-                                    📊 Relevant Markets
+                                    ðŸ“Š Relevant Markets
                                 </div>
                             `;
                             
@@ -1184,3 +1209,5 @@ Format your response clearly with proper structure and paragraphs.
     </script>
 </body>
 </html>
+
+
