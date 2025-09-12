@@ -636,6 +636,31 @@
         .chat-header { background: transparent; border-bottom: 1px solid rgba(255,255,255,0.08); }
         /* Hide in-card and analysis Polymarket links */
         .polymarket-button, .polymarket-link { display: none !important; }
+        /* Animated background shift */
+        @keyframes bgShift { 0% { background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%; } 100% { background-position: 50% 50%, 50% 50%, 50% 50%, 100% 100%; } }
+        /* About button */
+        .about-btn { height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; font-weight: 600; letter-spacing: .2px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); cursor: pointer; transition: transform .2s ease, background .2s ease; }
+        .about-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); }
+        /* Site footer */
+        .site-footer { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; background: rgba(16,18,28,0.45); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 900; }
+        .footer-title { color: #d6d6d6; font-weight: 700; font-size: .95rem; }
+        .footer-icons { display: inline-flex; gap: 8px; }
+        /* 3D panel */
+        .threeD-panel { position: fixed; left: 16px; bottom: 16px; width: 300px; height: 220px; border-radius: 16px; background: rgba(16,18,28,0.5); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 900; display: flex; flex-direction: column; overflow: hidden; }
+        .threeD-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.12); color: #e5e5e5; font-weight: 700; }
+        .panel-close { background: transparent; border: none; color: #e5e5e5; font-size: 18px; cursor: pointer; }
+        .threeD-body { flex: 1; display: grid; place-items: center; color: #b8c1ce; font-size: .95rem; }
+        .threeD-placeholder { opacity: .8; }
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { position: relative; width: min(680px, 92vw); background: rgba(16,18,28,0.8); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); padding: 22px; color: #e5e5e5; }
+        .modal-content h2 { color: #fff; margin-bottom: 10px; }
+        .modal-close { position: absolute; top: 10px; right: 14px; background: transparent; border: none; color: #e5e5e5; font-size: 22px; cursor: pointer; }
+        /* Avatars */
+        .message-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .8rem; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .avatar-user { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .avatar-bot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        @media (max-width: 768px) { .site-footer { bottom: 8px; padding: 8px 10px; } .threeD-panel { width: 260px; height: 190px; left: 10px; bottom: 10px; } }
     </style>
 </head>
 
@@ -647,6 +672,7 @@
         <a class="icon-btn" href="https://polymarket.com" target="_blank" rel="noopener" aria-label="Polymarket">
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
         </a>
+        <button class="about-btn" id="aboutBtn" type="button">About</button>
     </div>
     <div class="chat-container">
         <div class="chat-header">
@@ -660,17 +686,18 @@
                 <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
                 <div class="example-questions">
                     <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
-                        âš½ Premier League winner predictions
+                        Premier League winner predictions
                     </div>
                     <div class="example-question" onclick="askQuestion('What are the Fed interest rate predictions?')">
-                        ðŸ“Š Federal Reserve rate predictions  
+                        Federal Reserve rate predictions
                     </div>
                     <div class="example-question" onclick="askQuestion('Show me the highest volume markets')">
-                        ðŸ“ˆ Highest volume betting markets
+                        Highest volume betting markets
                     </div>
                     <div class="example-question" onclick="askQuestion('What NFL games should I bet on?')">
-                        ðŸˆ NFL betting recommendations
+                        NFL betting recommendations
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -690,9 +717,7 @@
                     placeholder="Ask me about any betting opportunity..."
                     rows="1"
                 ></textarea>
-                <button class="send-button" id="sendButton" onclick="sendMessage()">
-                    â†’
-                </button>
+                <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
             </div>
         </div>
     </div>
@@ -758,6 +783,21 @@
             });
 
             sendButton.addEventListener('click', sendMessage);
+            // About modal handlers
+            const aboutBtn = document.getElementById('aboutBtn');
+            const aboutModal = document.getElementById('aboutModal');
+            const aboutClose = document.getElementById('aboutClose');
+            if (aboutBtn && aboutModal) {
+                aboutBtn.addEventListener('click', () => { aboutModal.style.display = 'flex'; });
+                if (aboutClose) aboutClose.addEventListener('click', () => { aboutModal.style.display = 'none'; });
+                aboutModal.addEventListener('click', (e) => { if (e.target === aboutModal) aboutModal.style.display = 'none'; });
+            }
+            // 3D panel close handler
+            const closeThreeDPanel = document.getElementById('closeThreeDPanel');
+            const threeDPanel = document.getElementById('threeDPanel');
+            if (closeThreeDPanel && threeDPanel) {
+                closeThreeDPanel.addEventListener('click', () => { threeDPanel.style.display = 'none'; });
+            }
         }
 
         function askQuestion(question) {
@@ -990,7 +1030,6 @@ Provide your analysis and predictions based on this market data.
             const outcome1Class = outcome1.price > 0.6 ? 'favored' : outcome1.price < 0.4 ? 'underdog' : 'neutral';
             const outcome2Class = outcome2.price > 0.6 ? 'favored' : outcome2.price < 0.4 ? 'underdog' : 'neutral';
             
-            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
             
             return `
                 <div class="market-card">
@@ -1022,11 +1061,8 @@ Provide your analysis and predictions based on this market data.
                     </div>
                     <div class="market-actions">
                         <button class="action-button analyze-button" onclick="analyzeSpecificMarket('${market.id}', '${market.title.replace(/'/g, "\\'")}')">
-                            ðŸ¤– AI Analysis
+                            AI Analysis
                         </button>
-                        <a href="${polymarketUrl}" target="_blank" class="action-button polymarket-button">
-                            ðŸ“ˆ Open in Polymarket
-                        </a>
                     </div>
                 </div>
             `;
@@ -1074,13 +1110,11 @@ Format your response clearly with proper structure and paragraphs.
 `;
 
             const aiResponse = await callOpenRouterAPI(context);
-            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
             
             return `
                 <div class="ai-analysis">
                     <div class="ai-analysis-header">
-                        <span>ðŸ¤– Detailed Market Analysis</span>
-                        <a href="${polymarketUrl}" target="_blank" class="polymarket-link">ðŸ“ˆ Open in Polymarket</a>
+                        <span>Detailed Market Analysis</span>
                     </div>
                     <div class="ai-analysis-content">
                         ${formatAIResponse(aiResponse)}
@@ -1096,7 +1130,7 @@ Format your response clearly with proper structure and paragraphs.
             
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = sender === 'user' ? 'You' : 'AI';
+            if (sender === "user") { avatar.classList.add("avatar-user"); avatar.textContent = "YOU"; } else { avatar.classList.add("avatar-bot"); avatar.innerHTML = "<img src=\"https://placehold.co/44x44\" alt=\"PolyGF\" />"; }
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
@@ -1164,14 +1198,13 @@ Format your response clearly with proper structure and paragraphs.
                             marketsSection.className = 'markets-section';
                             marketsSection.innerHTML = `
                                 <div class="markets-header">
-                                    ðŸ“Š Relevant Markets
+                                    Relevant Markets
                                 </div>
                             `;
                             
                             relevantMarkets.forEach((market) => {
                                 const marketDiv = document.createElement('div');
                                 marketDiv.innerHTML = createMarketCard(market, 0);
-                                marketsSection.appendChild(marketDiv);
                             });
                             
                             element.appendChild(marketsSection);
@@ -1207,7 +1240,43 @@ Format your response clearly with proper structure and paragraphs.
             console.error('Unhandled promise rejection:', e.reason);
         });
     </script>
+    <div class="site-footer">
+        <span class="footer-title">Polymarket AI Advisor</span>
+        <div class="footer-icons">
+            <a class="icon-btn" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1).png" alt="Twitter" />
+            </a>
+            <a class="icon-btn" href="https://polymarket.com" target="_blank" rel="noopener" aria-label="Polymarket">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
+            </a>
+            <a class="icon-btn" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c4422ee520797f737eea3f_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(1).png" alt="GitHub" />
+            </a>
+        </div>
+    </div>
+
+    <div class="threeD-panel" id="threeDPanel">
+        <div class="threeD-header">
+            <span>3D Character</span>
+            <button class="panel-close" id="closeThreeDPanel" type="button">Close</button>
+        </div>
+        <div class="threeD-body">
+            <div class="threeD-placeholder">3D model coming soon</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aboutModal" style="display:none;">
+        <div class="modal-content">
+            <button class="modal-close" id="aboutClose" type="button">Close</button>
+            <h2>About PolyGF</h2>
+            <p>PolyGF is an AI LLM expert on Polymarket that discovers good bets and markets for users.</p>
+            <p>She will operate as an autonomous trader, livestreaming her Polymarket activity and progress on pump.fun.</p>
+            <p>Goal: become the number one trader on Polymarket.</p>
+            <p>Funding: uses 10% of creator rewards for Polymarket trades, and 90% for $POLYGF coin buybacks.</p>
+        </div>
+    </div>
 </body>
 </html>
+
 
 
