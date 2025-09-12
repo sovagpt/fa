@@ -1321,6 +1321,16 @@
                     }
                 });
             }
+            
+            // 3D panel close handler
+            const closeThreeDPanel = document.getElementById('closeThreeDPanel');
+            const threeDPanel = document.getElementById('threeDPanel');
+            
+            if (closeThreeDPanel && threeDPanel) {
+                closeThreeDPanel.addEventListener('click', () => { 
+                    threeDPanel.style.display = 'none'; 
+                });
+            }
         }
 
         function askQuestion(question) {
