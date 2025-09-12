@@ -13,84 +13,69 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            color: #ffffff;
         }
 
         .chat-container {
             width: 100%;
-            max-width: 900px;
-            height: 85vh;
-            background: rgba(255, 255, 255, 0.95);
+            max-width: 1000px;
+            height: 90vh;
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .chat-header {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            background: linear-gradient(135deg, #000000, #1a1a1a);
             color: white;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
-            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .chat-header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 5px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .chat-header p {
-            opacity: 0.9;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #10b981;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            opacity: 0.8;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #b0b0b0;
         }
 
         .chat-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.4);
         }
 
         .message {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            animation: fadeIn 0.5s ease;
+            gap: 16px;
+            animation: fadeIn 0.6s ease;
             max-width: 100%;
         }
 
@@ -99,272 +84,339 @@
         }
 
         .message-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 700;
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .message.user .message-avatar {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
         }
 
         .message.bot .message-avatar {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #000000, #374151);
         }
 
         .message-content {
-            background: white;
-            padding: 16px 20px;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px 24px;
+            border-radius: 16px;
             max-width: 75%;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            line-height: 1.5;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.6;
+            color: #ffffff;
         }
 
         .message.user .message-content {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* AI Response Formatting */
+        .ai-response h3 {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 16px 0 8px 0;
+            padding-bottom: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .ai-response p {
+            margin-bottom: 12px;
+            color: #e5e5e5;
+        }
+
+        .ai-response ul, .ai-response ol {
+            margin: 12px 0 12px 20px;
+            color: #e5e5e5;
+        }
+
+        .ai-response li {
+            margin-bottom: 6px;
+        }
+
+        .ai-response strong {
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .market-card {
-            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
-            border: 2px solid #e2e8f0;
-            border-radius: 15px;
-            padding: 18px;
-            margin: 12px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 16px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .market-card:hover {
-            border-color: #6366f1;
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
+            border-color: rgba(37, 99, 235, 0.5);
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.2);
             transform: translateY(-2px);
+        }
+
+        .market-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #2563eb, #1d4ed8, #1e40af);
         }
 
         .market-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .market-title {
             font-weight: 700;
-            color: #1e293b;
-            font-size: 1rem;
+            color: #ffffff;
+            font-size: 1.05rem;
             line-height: 1.4;
             flex: 1;
-            padding-right: 70px;
+            padding-right: 16px;
         }
 
         .market-image {
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             border-radius: 12px;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             flex-shrink: 0;
         }
 
         .market-outcomes {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 15px 0;
+            gap: 14px;
+            margin: 18px 0;
         }
 
         .outcome {
-            padding: 12px 16px;
-            border-radius: 10px;
+            padding: 14px 18px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             transition: all 0.3s ease;
-            border: 2px solid transparent;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
 
         .outcome:hover {
-            transform: scale(1.05);
-            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .outcome.favored {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #059669, #047857);
             color: white;
+            border-color: rgba(5, 150, 105, 0.3);
         }
 
         .outcome.underdog {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
             color: white;
+            border-color: rgba(220, 38, 38, 0.3);
         }
 
         .outcome.neutral {
             background: linear-gradient(135deg, #6b7280, #4b5563);
             color: white;
+            border-color: rgba(107, 114, 128, 0.3);
         }
 
         .market-stats {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid #cbd5e1;
-            font-size: 0.8rem;
-            color: #64748b;
-            font-weight: 500;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-item {
             text-align: center;
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .stat-label {
             display: block;
-            margin-bottom: 2px;
-            font-size: 0.7rem;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            font-weight: 600;
         }
 
         .stat-value {
-            font-weight: 700;
-            color: #374151;
+            font-weight: 800;
+            color: #ffffff;
+            font-size: 0.95rem;
         }
 
         .market-actions {
             display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid #cbd5e1;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .action-button {
             flex: 1;
-            padding: 10px 16px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             text-align: center;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .analyze-button {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #374151, #1f2937);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .analyze-button:hover {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            background: linear-gradient(135deg, #4b5563, #374151);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .polymarket-button {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
         }
 
         .polymarket-button:hover {
-            background: linear-gradient(135deg, #059669, #047857);
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
         }
 
         .chat-input-container {
-            padding: 20px;
-            background: rgba(248, 250, 252, 0.9);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         .chat-input {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             align-items: flex-end;
         }
 
         .input-field {
             flex: 1;
-            padding: 16px 22px;
-            border: 2px solid #e2e8f0;
-            border-radius: 25px;
-            background: white;
+            padding: 16px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
             font-size: 1rem;
             resize: none;
             max-height: 120px;
-            min-height: 52px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            min-height: 56px;
             transition: all 0.3s ease;
             font-family: inherit;
         }
 
+        .input-field::placeholder {
+            color: #9ca3af;
+        }
+
         .input-field:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .send-button {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
             border: none;
-            padding: 16px 22px;
-            border-radius: 50%;
+            padding: 0;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            width: 52px;
-            height: 52px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            font-size: 1.2rem;
         }
 
         .send-button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
         }
 
         .send-button:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
         }
 
         .typing-indicator {
             display: none;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             padding: 16px 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: fit-content;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            color: #b0b0b0;
         }
 
         .typing-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #6366f1;
+            background: #2563eb;
             animation: typing 1.5s infinite;
         }
 
@@ -376,15 +428,10 @@
             30% { opacity: 1; transform: scale(1); }
         }
 
-        /* TYPEWRITER EFFECT STYLES */
-        .typing-text {
-            overflow: hidden;
-        }
-
         .typing-cursor::after {
             content: '|';
             animation: blink-caret 1s infinite;
-            color: #6366f1;
+            color: #2563eb;
             font-weight: bold;
         }
 
@@ -394,102 +441,127 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .welcome-message {
             text-align: center;
             padding: 40px 20px;
-            color: #64748b;
+            color: #b0b0b0;
         }
 
         .welcome-message h2 {
-            color: #1e293b;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .welcome-message p {
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.6;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            color: #9ca3af;
         }
 
         .example-questions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 25px;
+            gap: 16px;
+            margin-top: 30px;
         }
 
         .example-question {
-            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-            border: 2px solid #cbd5e1;
-            padding: 15px 18px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px 22px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
-            color: #475569;
+            font-size: 0.95rem;
+            color: #e5e5e5;
             font-weight: 500;
             text-align: left;
+            backdrop-filter: blur(5px);
         }
 
         .example-question:hover {
-            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            background: rgba(37, 99, 235, 0.1);
+            border-color: rgba(37, 99, 235, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            border-color: #6366f1;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .ai-analysis {
-            background: linear-gradient(135deg, #fef3c7, #fcd34d);
-            border: 2px solid #f59e0b;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 6px solid #f59e0b;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 20px 0;
+            border-left: 4px solid #2563eb;
+            backdrop-filter: blur(5px);
         }
 
         .ai-analysis-header {
-            font-weight: 700;
-            color: #92400e;
-            margin-bottom: 12px;
-            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 8px;
             justify-content: space-between;
             flex-wrap: wrap;
         }
 
         .ai-analysis-content {
-            color: #78350f;
-            line-height: 1.6;
+            color: #e5e5e5;
+            line-height: 1.7;
         }
 
         .polymarket-link {
-            padding: 5px 12px;
-            background: #10b981;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .polymarket-link:hover {
-            background: #059669;
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Markets Section */
+        .markets-section {
+            margin-top: 24px;
+        }
+
+        .markets-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         @media (max-width: 768px) {
             .chat-container {
-                height: 92vh;
-                margin: 15px;
+                height: 95vh;
+                margin: 10px;
                 max-width: none;
+                border-radius: 16px;
             }
             
             .message-content {
@@ -506,51 +578,73 @@
 
             .market-stats {
                 grid-template-columns: 1fr 1fr;
-                gap: 8px;
             }
 
             .market-actions {
                 flex-direction: column;
             }
 
-            .market-title {
-                padding-right: 10px;
-            }
-
             .ai-analysis-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 12px;
             }
+
+            .chat-input {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .send-button {
+                width: 100%;
+                height: 48px;
+                border-radius: 12px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h1>🎯 Polymarket AI Betting Advisor</h1>
-            <p>AI-powered insights on prediction markets using real-time data</p>
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span id="statusText">Loading market data...</span>
-            </div>
+            <h1>Polymarket AI Advisor</h1>
+            <p>Intelligent insights on prediction markets with real-time analysis</p>
         </div>
 
         <div class="chat-messages" id="chatMessages">
             <div class="welcome-message">
-                <h2>Welcome to Your Personal Betting Advisor!</h2>
-                <p>Ask me about any betting markets and I'll analyze the data to give you intelligent predictions and insights.</p>
+                <h2>Welcome to Your AI Betting Advisor</h2>
+                <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
                 <div class="example-questions">
                     <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
-                        ⚽ Who will win the Premier League this season?
+                        ⚽ Premier League winner predictions
                     </div>
                     <div class="example-question" onclick="askQuestion('What are the Fed interest rate predictions?')">
-                        💰 What are the Fed rate predictions?
+                        📊 Federal Reserve rate predictions  
                     </div>
                     <div class="example-question" onclick="askQuestion('Show me the highest volume markets')">
-                        📈 Show me high volume markets
+                        📈 Highest volume betting markets
                     </div>
                     <div class="example-question" onclick="askQuestion('What NFL games should I bet on?')">
-                        🏈 What NFL games should I bet on?
+                        🏈 NFL betting recommendations
                     </div>
                 </div>
             </div>
@@ -572,7 +666,7 @@
                     rows="1"
                 ></textarea>
                 <button class="send-button" id="sendButton" onclick="sendMessage()">
-                    ▶️
+                    →
                 </button>
             </div>
         </div>
@@ -600,16 +694,13 @@
             try {
                 await loadPolymarketData();
                 setupEventListeners();
-                updateStatus('✅ Market data loaded - Ready to chat!', true);
             } catch (error) {
                 console.error('Failed to initialize app:', error);
-                updateStatus('❌ Failed to load market data', false);
             }
         }
 
         async function loadPolymarketData() {
             try {
-                updateStatus('📡 Loading market data...', false);
                 const response = await fetch(CONFIG.POLYMARKET_DATA_URL);
                 
                 if (!response.ok) {
@@ -623,14 +714,6 @@
                 console.error('Error loading Polymarket data:', error);
                 throw error;
             }
-        }
-
-        function updateStatus(text, isReady) {
-            const statusText = document.getElementById('statusText');
-            const statusDot = document.querySelector('.status-dot');
-            
-            statusText.textContent = text;
-            statusDot.style.background = isReady ? '#10b981' : '#f59e0b';
         }
 
         function setupEventListeners() {
@@ -685,25 +768,45 @@
             try {
                 isLoading = true;
                 const relevantMarkets = findRelevantMarkets(message);
-                const response = await getAIResponse(message);
+                const response = await getAIResponse(message, relevantMarkets);
                 hideTypingIndicator();
-                // Pass markets separately so they appear instantly after typing
                 addMessage('bot', response, relevantMarkets);
             } catch (error) {
                 console.error('Error getting AI response:', error);
                 hideTypingIndicator();
-                addMessage('bot', '❌ Sorry, I encountered an error while processing your request. Please try again.');
+                addMessage('bot', 'I encountered an error while processing your request. Please try again.');
             } finally {
                 isLoading = false;
             }
         }
 
-        async function getAIResponse(userMessage) {
-            const relevantMarkets = findRelevantMarkets(userMessage);
+        async function getAIResponse(userMessage, relevantMarkets) {
             const context = createAIContext(userMessage, relevantMarkets);
             const aiResponse = await callOpenRouterAPI(context);
-            // Return just the AI response, markets will be added separately
-            return aiResponse;
+            return formatAIResponse(aiResponse);
+        }
+
+        function formatAIResponse(response) {
+            // Format the AI response with proper HTML structure for better readability
+            let formattedResponse = response;
+            
+            // Add paragraph breaks for better formatting
+            formattedResponse = formattedResponse
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+            
+            // Wrap in paragraph tags
+            if (!formattedResponse.startsWith('<')) {
+                formattedResponse = '<p>' + formattedResponse + '</p>';
+            }
+            
+            // Format numbered lists
+            formattedResponse = formattedResponse.replace(/(\d+\.\s)/g, '<br><strong>$1</strong>');
+            
+            // Bold key phrases
+            formattedResponse = formattedResponse.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            return `<div class="ai-response">${formattedResponse}</div>`;
         }
 
         function findRelevantMarkets(query) {
@@ -787,16 +890,17 @@ Relevant Betting Markets Data:
 ${JSON.stringify(marketData, null, 2)}
 
 Instructions:
-1. Analyze the provided betting markets data that are relevant to the user's question
-2. Give your expert opinion on the most likely outcomes based on the market data
-3. Explain your reasoning using the odds, volume, and market sentiment
+1. Analyze the provided betting markets data relevant to the user's question
+2. Give your expert opinion on the most likely outcomes based on market data
+3. Explain your reasoning using odds, volume, and market sentiment
 4. Be conversational and engaging
-5. If asked about who will win something, look at the market odds and give your prediction
-6. Consider volume and liquidity as indicators of market confidence
-7. Keep your response concise but informative
-8. Don't mention that you're looking at JSON data - just analyze the markets naturally
+5. Format your response with clear structure and paragraphs
+6. Use bullet points or numbered lists where appropriate
+7. Consider volume and liquidity as indicators of market confidence
+8. Don't mention that you're looking at JSON data - analyze the markets naturally
+9. Keep sections well-organized with clear headings when discussing multiple topics
 
-Please provide your analysis and predictions based on this market data.
+Provide your analysis and predictions based on this market data.
 `;
         }
 
@@ -824,7 +928,7 @@ Please provide your analysis and predictions based on this market data.
                     messages: [
                         {
                             role: 'system',
-                            content: 'You are an expert betting analyst who provides intelligent insights on prediction markets. Analyze market data and give clear, confident predictions with reasoning.'
+                            content: 'You are an expert betting analyst who provides intelligent insights on prediction markets. Analyze market data and give clear, well-formatted predictions with reasoning. Structure your responses with clear paragraphs and use formatting to make information easily digestible.'
                         },
                         {
                             role: 'user',
@@ -845,25 +949,12 @@ Please provide your analysis and predictions based on this market data.
             return data.choices[0].message.content;
         }
 
-        function formatResponseWithMarkets(aiResponse, relevantMarkets) {
-            let formattedResponse = aiResponse;
-            
-            if (relevantMarkets.length > 0) {
-                formattedResponse += '<br><br><strong>📊 Relevant Markets:</strong><br>';
-                relevantMarkets.forEach((market, index) => {
-                    formattedResponse += createMarketCard(market, index);
-                });
-            }
-            
-            return formattedResponse;
-        }
-
         function createMarketCard(market, index) {
             const formatVolume = (vol) => {
                 if (!vol || vol === 0) return '$0';
-                if (vol > 1000000) return `$${(vol / 1000000).toFixed(1)}M`;
-                if (vol > 1000) return `$${(vol / 1000).toFixed(1)}K`;
-                return `$${vol.toFixed(0)}`;
+                if (vol > 1000000) return `${(vol / 1000000).toFixed(1)}M`;
+                if (vol > 1000) return `${(vol / 1000).toFixed(1)}K`;
+                return `${vol.toFixed(0)}`;
             };
             
             const formatPrice = (price) => `${(price * 100).toFixed(1)}%`;
@@ -926,11 +1017,11 @@ Please provide your analysis and predictions based on this market data.
             try {
                 const detailedAnalysis = await getDetailedMarketAnalysis(market);
                 hideTypingIndicator();
-                addMessage('bot', detailedAnalysis);
+                addMessage('bot', detailedAnalysis, [market]);
             } catch (error) {
                 console.error('Error getting detailed analysis:', error);
                 hideTypingIndicator();
-                addMessage('bot', '❌ Sorry, I couldn\'t analyze this specific market right now.');
+                addMessage('bot', 'I couldn\'t analyze this specific market right now. Please try again.');
             }
         }
 
@@ -947,14 +1038,14 @@ Liquidity: ${market.liquidity}
 Favored Outcome: ${market.favoredOutcome}
 End Date: ${market.endTime}
 
-Please provide:
+Please provide a well-structured analysis with:
 1. What this market is betting on (in simple terms)
 2. Current odds analysis
 3. Your prediction and confidence level
 4. Key factors that could influence the outcome
 5. Risk assessment
 
-Be detailed and specific in your analysis.
+Format your response clearly with proper structure and paragraphs.
 `;
 
             const aiResponse = await callOpenRouterAPI(context);
@@ -967,16 +1058,13 @@ Be detailed and specific in your analysis.
                         <a href="${polymarketUrl}" target="_blank" class="polymarket-link">📈 Open in Polymarket</a>
                     </div>
                     <div class="ai-analysis-content">
-                        ${aiResponse}
+                        ${formatAIResponse(aiResponse)}
                     </div>
                 </div>
-                
-                ${createMarketCard(market, 0)}
             `;
         }
 
-        // TYPEWRITER EFFECT FUNCTION
-        function addMessage(sender, content) {
+        function addMessage(sender, content, relevantMarkets = null) {
             const messagesContainer = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
@@ -989,8 +1077,7 @@ Be detailed and specific in your analysis.
             contentDiv.className = 'message-content';
             
             if (sender === 'bot') {
-                // Start typewriter effect for bot messages
-                startTypewriterEffect(contentDiv, content);
+                startTypewriterEffect(contentDiv, content, relevantMarkets);
             } else {
                 contentDiv.innerHTML = content;
             }
@@ -1003,29 +1090,22 @@ Be detailed and specific in your analysis.
             chatHistory.push({ sender, content });
         }
 
-        function startTypewriterEffect(element, htmlContent) {
+        function startTypewriterEffect(element, htmlContent, relevantMarkets = null) {
             element.innerHTML = '';
             element.classList.add('typing-cursor');
             
             let currentIndex = 0;
-            const speed = 20; // milliseconds per character
-            let displayText = '';
-            
-            // Strip HTML tags for typing effect, but keep track of where they should be
+            const speed = 15;
             const textOnly = htmlContent.replace(/<[^>]*>/g, '');
             
             function typeNextChar() {
                 if (currentIndex < textOnly.length) {
-                    displayText += textOnly[currentIndex];
-                    
-                    // Find the corresponding position in original HTML
                     let htmlToShow = '';
                     let textIndex = 0;
                     let htmlIndex = 0;
                     
                     while (htmlIndex < htmlContent.length && textIndex <= currentIndex) {
                         if (htmlContent[htmlIndex] === '<') {
-                            // Add the entire HTML tag
                             const tagEnd = htmlContent.indexOf('>', htmlIndex);
                             if (tagEnd !== -1) {
                                 htmlToShow += htmlContent.substring(htmlIndex, tagEnd + 1);
@@ -1045,19 +1125,36 @@ Be detailed and specific in your analysis.
                     element.innerHTML = htmlToShow;
                     currentIndex++;
                     
-                    // Auto-scroll as we type
                     const messagesContainer = document.getElementById('chatMessages');
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     
                     setTimeout(typeNextChar, speed);
                 } else {
-                    // Typing complete - show full HTML content
                     element.innerHTML = htmlContent;
                     element.classList.remove('typing-cursor');
                     
-                    // Final scroll
-                    const messagesContainer = document.getElementById('chatMessages');
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    if (relevantMarkets && relevantMarkets.length > 0) {
+                        setTimeout(() => {
+                            const marketsSection = document.createElement('div');
+                            marketsSection.className = 'markets-section';
+                            marketsSection.innerHTML = `
+                                <div class="markets-header">
+                                    📊 Relevant Markets
+                                </div>
+                            `;
+                            
+                            relevantMarkets.forEach((market) => {
+                                const marketDiv = document.createElement('div');
+                                marketDiv.innerHTML = createMarketCard(market, 0);
+                                marketsSection.appendChild(marketDiv);
+                            });
+                            
+                            element.appendChild(marketsSection);
+                            
+                            const messagesContainer = document.getElementById('chatMessages');
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        }, 300);
+                    }
                 }
             }
             
@@ -1077,7 +1174,6 @@ Be detailed and specific in your analysis.
             indicator.style.display = 'none';
         }
 
-        // Error handling
         window.addEventListener('error', function(e) {
             console.error('Global error:', e.error);
         });
