@@ -661,6 +661,44 @@
         .avatar-user { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
         .avatar-bot img { width: 100%; height: 100%; object-fit: cover; display: block; }
         @media (max-width: 768px) { .site-footer { bottom: 8px; padding: 8px 10px; } .threeD-panel { width: 260px; height: 190px; left: 10px; bottom: 10px; } }
+
+        /* Footer: full-width, not fixed */
+        .site-footer { width: 100%; max-width: 1200px; margin: 24px auto 8px; padding: 12px 16px; border-radius: 14px; background: rgba(16,18,28,0.45); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content: space-between; }
+        .site-footer .footer-title { color: #d6d6d6; font-weight: 700; font-size: .95rem; }
+        .site-footer .footer-icons { display: inline-flex; gap: 8px; }
+
+        /* Robust input layout */
+        .chat-input-container { width: 100%; box-sizing: border-box; }
+        .chat-input { width: 100%; }
+        .input-field { width: 100%; min-width: 0; }
+
+        /* About modal polish */
+        .about-modal { padding: 26px; position: relative; }
+        .about-header { display:flex; align-items:flex-end; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+        .about-title h2 { margin: 0; font-size: 1.5rem; }
+        .about-title .subtitle { margin: 6px 0 0; color:#aab2c5; }
+        .about-badges { display:flex; gap:8px; flex-wrap: wrap; }
+        .badge { padding: 6px 10px; border-radius: 999px; background: rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.35); color:#cfe0ff; font-weight:700; font-size:.8rem; }
+        .about-grid { display:grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-top: 6px; }
+        .feature-list { margin: 10px 0 0 18px; color:#d7dce7; }
+        .feature-list li { margin: 6px 0; }
+        .about-stats { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .stat { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 12px; }
+        .stat-label { display:block; color:#9aa5b5; font-size:.78rem; text-transform: uppercase; letter-spacing:.6px; }
+        .stat-value { display:block; color:#fff; font-weight:800; margin-top: 2px; }
+        .about-note { margin-top: 12px; color:#aab2c5; }
+        @media (max-width: 820px){ .about-grid { grid-template-columns: 1fr; } }
+
+        /* Animated background */
+        body { 
+            background: 
+                radial-gradient(1200px 600px at 10% 10%, rgba(37, 99, 235, 0.18), transparent 40%),
+                radial-gradient(900px 500px at 80% 20%, rgba(0, 212, 255, 0.16), transparent 45%),
+                radial-gradient(800px 600px at 40% 85%, rgba(155, 89, 182, 0.14), transparent 45%),
+                linear-gradient(135deg, #090d19 0%, #0b0f1f 50%, #0a0d18 100%);
+            background-size: 200% 200%;
+            animation: bgShift 48s ease-in-out infinite alternate;
+        }
     </style>
 </head>
 
@@ -1240,7 +1278,7 @@ Format your response clearly with proper structure and paragraphs.
             console.error('Unhandled promise rejection:', e.reason);
         });
     </script>
-    <div class="site-footer">
+    <footer class="site-footer">
         <span class="footer-title">Polymarket AI Advisor</span>
         <div class="footer-icons">
             <a class="icon-btn" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
@@ -1252,8 +1290,7 @@ Format your response clearly with proper structure and paragraphs.
             <a class="icon-btn" href="#" target="_blank" rel="noopener" aria-label="GitHub">
                 <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c4422ee520797f737eea3f_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(1).png" alt="GitHub" />
             </a>
-        </div>
-    </div>
+</footer>
 
     <div class="threeD-panel" id="threeDPanel">
         <div class="threeD-header">
@@ -1266,13 +1303,37 @@ Format your response clearly with proper structure and paragraphs.
     </div>
 
     <div class="modal-overlay" id="aboutModal" style="display:none;">
-        <div class="modal-content">
+        <div class="modal-content about-modal">
             <button class="modal-close" id="aboutClose" type="button">Close</button>
-            <h2>About PolyGF</h2>
-            <p>PolyGF is an AI LLM expert on Polymarket that discovers good bets and markets for users.</p>
-            <p>She will operate as an autonomous trader, livestreaming her Polymarket activity and progress on pump.fun.</p>
-            <p>Goal: become the number one trader on Polymarket.</p>
-            <p>Funding: uses 10% of creator rewards for Polymarket trades, and 90% for $POLYGF coin buybacks.</p>
+            <div class="about-header">
+                <div class="about-title">
+                    <h2>Meet PolyGF</h2>
+                    <p class="subtitle">AI market analyst and autonomous trader</p>
+                </div>
+                <div class="about-badges">
+                    <span class="badge">Polymarket Expert</span>
+                    <span class="badge">LLM-Powered</span>
+                    <span class="badge">Live Strategy</span>
+                </div>
+            </div>
+            <div class="about-grid">
+                <div class="about-copy">
+                    <p>PolyGF analyzes prediction markets and surfaces high-conviction opportunities with clear reasoning and risk-aware sizing.</p>
+                    <ul class="feature-list">
+                        <li>Signals blend market depth, liquidity and momentum</li>
+                        <li>Transparent thesis, scenarios, and catalysts for each idea</li>
+                        <li>Portfolio discipline: caps, Kelly-style sizing and stop logic</li>
+                        <li>Roadmap: autonomous trading with transparent performance</li>
+                    </ul>
+                </div>
+                <div class="about-stats">
+                    <div class="stat"><span class="stat-label">Focus</span><span class="stat-value">Prediction markets</span></div>
+                    <div class="stat"><span class="stat-label">Engine</span><span class="stat-value">LLM + ranker</span></div>
+                    <div class="stat"><span class="stat-label">Funding</span><span class="stat-value">10% creator rewards</span></div>
+                    <div class="stat"><span class="stat-label">Buybacks</span><span class="stat-value">90% to $POLYGF</span></div>
+                </div>
+            </div>
+            <div class="about-note">PolyGF will livestream trades on pump.fun and aims to become the top trader on Polymarket.</div>
         </div>
     </div>
 </body>
