@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,35 +13,165 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            background: 
+                radial-gradient(1200px 600px at 10% 10%, rgba(37, 99, 235, 0.18), transparent 40%),
+                radial-gradient(900px 500px at 80% 20%, rgba(0, 212, 255, 0.16), transparent 45%),
+                radial-gradient(800px 600px at 40% 85%, rgba(155, 89, 182, 0.14), transparent 45%),
+                linear-gradient(135deg, #090d19 0%, #0b0f1f 50%, #0a0d18 100%);
+            background-size: 200% 200%;
+            animation: bgShift 48s ease-in-out infinite alternate;
             min-height: 100vh;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Enhanced background glow */
+        body::before,
+        body::after { 
+            content: ""; 
+            position: fixed; 
+            z-index: -1; 
+            width: 60vmax; 
+            height: 60vmax; 
+            filter: blur(70px); 
+            opacity: 0.35; 
+            transform: translateZ(0); 
+            pointer-events: none; 
+        }
+
+        body::before { 
+            top: -20vmax; 
+            left: -10vmax; 
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.45), rgba(29, 78, 216, 0.25), transparent 60%); 
+            animation: floatA 26s ease-in-out infinite; 
+        }
+
+        body::after { 
+            bottom: -25vmax; 
+            right: -15vmax; 
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.35), rgba(155, 89, 182, 0.25), transparent 60%); 
+            animation: floatB 34s ease-in-out infinite; 
+        }
+
+        @keyframes floatA { 
+            0%, 100% { transform: translate(0,0) scale(1);} 
+            50% { transform: translate(3vmax,2vmax) scale(1.05);} 
+        }
+
+        @keyframes floatB { 
+            0%, 100% { transform: translate(0,0) scale(1);} 
+            50% { transform: translate(-3vmax,-2vmax) scale(1.05);} 
+        }
+
+        @keyframes bgShift { 
+            0% { background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%; } 
+            100% { background-position: 50% 50%, 50% 50%, 50% 50%, 100% 100%; } 
+        }
+
+        /* Main content container */
+        .main-content {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: #ffffff;
+        }
+
+        .top-right-icons { 
+            position: fixed; 
+            top: 18px; 
+            right: 20px; 
+            display: flex; 
+            gap: 10px; 
+            z-index: 1000; 
+        }
+
+        .icon-btn { 
+            width: 44px; 
+            height: 44px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 12px; 
+            background: rgba(255,255,255,0.06); 
+            border: 1px solid rgba(255,255,255,0.18); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); 
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35); 
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; 
+            text-decoration: none;
+            color: white;
+        }
+
+        .icon-btn:hover { 
+            transform: translateY(-2px); 
+            background: rgba(255,255,255,0.10); 
+            box-shadow: 0 10px 24px rgba(0,0,0,0.45); 
+        }
+
+        .icon-btn img { 
+            width: 22px; 
+            height: 22px; 
+            object-fit: contain; 
+            display: block; 
+        }
+
+        .about-btn { 
+            height: 44px; 
+            padding: 0 14px; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.18); 
+            background: rgba(255,255,255,0.06); 
+            color: #fff; 
+            font-weight: 600; 
+            letter-spacing: .2px; 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px); 
+            cursor: pointer; 
+            transition: transform .2s ease, background .2s ease; 
+        }
+
+        .about-btn:hover { 
+            transform: translateY(-2px); 
+            background: rgba(255,255,255,0.10); 
         }
 
         .chat-container {
             width: 100%;
             max-width: 1000px;
             height: 90vh;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
+            background: rgba(16, 18, 28, 0.38);
+            backdrop-filter: blur(22px) saturate(120%);
+            -webkit-backdrop-filter: blur(22px) saturate(120%);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
             border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .chat-container::before { 
+            content: ""; 
+            position: absolute; 
+            inset: 0; 
+            border-radius: inherit; 
+            padding: 1px; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)); 
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); 
+            -webkit-mask-composite: xor; 
+            mask-composite: exclude; 
+            pointer-events: none; 
         }
 
         .chat-header {
-            background: linear-gradient(135deg, #000000, #1a1a1a);
+            background: transparent;
             color: white;
             padding: 24px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .chat-header h1 {
@@ -86,23 +216,27 @@
         .message-avatar {
             width: 44px;
             height: 44px;
-            border-radius: 12px;
+            border-radius: 50%;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 800;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .message.user .message-avatar {
+        .avatar-user {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
         }
 
-        .message.bot .message-avatar {
-            background: linear-gradient(135deg, #000000, #374151);
+        .avatar-bot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .message-content {
@@ -319,17 +453,6 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .polymarket-button {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-        }
-
-        .polymarket-button:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-        }
-
         .chat-input-container {
             padding: 24px;
             background: rgba(0, 0, 0, 0.6);
@@ -341,10 +464,12 @@
             display: flex;
             gap: 16px;
             align-items: flex-end;
+            width: 100%;
         }
 
         .input-field {
             flex: 1;
+            min-width: 0;
             padding: 16px 24px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
@@ -385,6 +510,7 @@
             justify-content: center;
             box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
             font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
         .send-button:hover:not(:disabled) {
@@ -519,27 +645,6 @@
             line-height: 1.7;
         }
 
-        .polymarket-link {
-            padding: 8px 16px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .polymarket-link:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        /* Markets Section */
         .markets-section {
             margin-top: 24px;
         }
@@ -556,10 +661,237 @@
             gap: 8px;
         }
 
+        /* Footer */
+        .site-footer {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(16,18,28,0.45);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+        }
+
+        .footer-title {
+            color: #d6d6d6;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* 3D panel */
+        .threeD-panel { 
+            position: fixed; 
+            left: 16px; 
+            bottom: 16px; 
+            width: 300px; 
+            height: 220px; 
+            border-radius: 16px; 
+            background: rgba(16,18,28,0.5); 
+            border: 1px solid rgba(255,255,255,0.12); 
+            backdrop-filter: blur(14px); 
+            -webkit-backdrop-filter: blur(14px); 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35); 
+            z-index: 900; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+        }
+
+        .threeD-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 8px 10px; 
+            border-bottom: 1px solid rgba(255,255,255,0.12); 
+            color: #e5e5e5; 
+            font-weight: 700; 
+        }
+
+        .panel-close { 
+            background: transparent; 
+            border: none; 
+            color: #e5e5e5; 
+            font-size: 18px; 
+            cursor: pointer; 
+        }
+
+        .threeD-body { 
+            flex: 1; 
+            display: grid; 
+            place-items: center; 
+            color: #b8c1ce; 
+            font-size: 0.95rem; 
+        }
+
+        .threeD-placeholder { 
+            opacity: 0.8; 
+        }
+
+        /* Modal */
+        .modal-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(4px); 
+            -webkit-backdrop-filter: blur(4px); 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 1000; 
+        }
+
+        .modal-content { 
+            position: relative; 
+            width: min(680px, 92vw); 
+            background: rgba(16,18,28,0.8); 
+            border: 1px solid rgba(255,255,255,0.12); 
+            border-radius: 16px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            padding: 22px; 
+            color: #e5e5e5; 
+        }
+
+        .modal-content h2 { 
+            color: #fff; 
+            margin-bottom: 10px; 
+        }
+
+        .modal-close { 
+            position: absolute; 
+            top: 10px; 
+            right: 14px; 
+            background: transparent; 
+            border: none; 
+            color: #e5e5e5; 
+            font-size: 22px; 
+            cursor: pointer; 
+        }
+
+        .about-modal { 
+            padding: 26px; 
+            position: relative; 
+        }
+
+        .about-header { 
+            display:flex; 
+            align-items:flex-end; 
+            justify-content: space-between; 
+            gap: 16px; 
+            margin-bottom: 14px; 
+        }
+
+        .about-title h2 { 
+            margin: 0; 
+            font-size: 1.5rem; 
+        }
+
+        .about-title .subtitle { 
+            margin: 6px 0 0; 
+            color:#aab2c5; 
+        }
+
+        .about-badges { 
+            display:flex; 
+            gap:8px; 
+            flex-wrap: wrap; 
+        }
+
+        .badge { 
+            padding: 6px 10px; 
+            border-radius: 999px; 
+            background: rgba(37,99,235,0.12); 
+            border:1px solid rgba(37,99,235,0.35); 
+            color:#cfe0ff; 
+            font-weight:700; 
+            font-size:0.8rem; 
+        }
+
+        .about-grid { 
+            display:grid; 
+            grid-template-columns: 1.5fr 1fr; 
+            gap: 18px; 
+            margin-top: 6px; 
+        }
+
+        .feature-list { 
+            margin: 10px 0 0 18px; 
+            color:#d7dce7; 
+        }
+
+        .feature-list li { 
+            margin: 6px 0; 
+        }
+
+        .about-stats { 
+            display:grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+        }
+
+        .stat { 
+            background: rgba(255,255,255,0.05); 
+            border:1px solid rgba(255,255,255,0.12); 
+            border-radius: 10px; 
+            padding: 10px 12px; 
+        }
+
+        .stat-label { 
+            display:block; 
+            color:#9aa5b5; 
+            font-size:0.78rem; 
+            text-transform: uppercase; 
+            letter-spacing:0.6px; 
+        }
+
+        .stat-value { 
+            display:block; 
+            color:#fff; 
+            font-weight:800; 
+            margin-top: 2px; 
+        }
+
+        .about-note { 
+            margin-top: 12px; 
+            color:#aab2c5; 
+        }
+
+        /* Scrollbar Styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         @media (max-width: 768px) {
+            .main-content {
+                padding: 10px;
+            }
+            
             .chat-container {
                 height: 95vh;
-                margin: 10px;
                 max-width: none;
                 border-radius: 16px;
             }
@@ -600,108 +932,30 @@
                 height: 48px;
                 border-radius: 12px;
             }
-        }
 
-        /* Scrollbar Styling */
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
+            .site-footer {
+                margin: 16px 10px 8px;
+                padding: 12px 16px;
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
 
-        .chat-messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
+            .threeD-panel { 
+                width: 260px; 
+                height: 190px; 
+                left: 10px; 
+                bottom: 10px; 
+            }
 
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-            /* Enhanced background glow */
-        body::before,
-        body::after { content: ""; position: fixed; z-index: -1; width: 60vmax; height: 60vmax; filter: blur(70px); opacity: 0.35; transform: translateZ(0); pointer-events: none; }
-        body::before { top: -20vmax; left: -10vmax; background: radial-gradient(circle at center, rgba(37, 99, 235, 0.45), rgba(29, 78, 216, 0.25), transparent 60%); animation: floatA 26s ease-in-out infinite; }
-        body::after { bottom: -25vmax; right: -15vmax; background: radial-gradient(circle at center, rgba(0, 212, 255, 0.35), rgba(155, 89, 182, 0.25), transparent 60%); animation: floatB 34s ease-in-out infinite; }
-        @keyframes floatA { 0%, 100% { transform: translate(0,0) scale(1);} 50% { transform: translate(3vmax,2vmax) scale(1.05);} }
-        @keyframes floatB { 0%, 100% { transform: translate(0,0) scale(1);} 50% { transform: translate(-3vmax,-2vmax) scale(1.05);} }
-        .top-right-icons { position: fixed; top: 18px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
-        .icon-btn { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease; }
-        .icon-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
-        .icon-btn img { width: 22px; height: 22px; object-fit: contain; display: block; }
-        .chat-container { background: rgba(16, 18, 28, 0.38); backdrop-filter: blur(22px) saturate(120%); -webkit-backdrop-filter: blur(22px) saturate(120%); border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 25px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); }
-        .chat-container::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
-        .chat-header { background: transparent; border-bottom: 1px solid rgba(255,255,255,0.08); }
-        /* Hide in-card and analysis Polymarket links */
-        .polymarket-button, .polymarket-link { display: none !important; }
-        /* Animated background shift */
-        @keyframes bgShift { 0% { background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%; } 100% { background-position: 50% 50%, 50% 50%, 50% 50%, 100% 100%; } }
-        /* About button */
-        .about-btn { height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #fff; font-weight: 600; letter-spacing: .2px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); cursor: pointer; transition: transform .2s ease, background .2s ease; }
-        .about-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); }
-        /* Site footer */
-        .site-footer { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px; background: rgba(16,18,28,0.45); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 900; }
-        .footer-title { color: #d6d6d6; font-weight: 700; font-size: .95rem; }
-        .footer-icons { display: inline-flex; gap: 8px; }
-        /* 3D panel */
-        .threeD-panel { position: fixed; left: 16px; bottom: 16px; width: 300px; height: 220px; border-radius: 16px; background: rgba(16,18,28,0.5); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); z-index: 900; display: flex; flex-direction: column; overflow: hidden; }
-        .threeD-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.12); color: #e5e5e5; font-weight: 700; }
-        .panel-close { background: transparent; border: none; color: #e5e5e5; font-size: 18px; cursor: pointer; }
-        .threeD-body { flex: 1; display: grid; place-items: center; color: #b8c1ce; font-size: .95rem; }
-        .threeD-placeholder { opacity: .8; }
-        /* Modal */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
-        .modal-content { position: relative; width: min(680px, 92vw); background: rgba(16,18,28,0.8); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); padding: 22px; color: #e5e5e5; }
-        .modal-content h2 { color: #fff; margin-bottom: 10px; }
-        .modal-close { position: absolute; top: 10px; right: 14px; background: transparent; border: none; color: #e5e5e5; font-size: 22px; cursor: pointer; }
-        /* Avatars */
-        .message-avatar { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .8rem; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        .avatar-user { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
-        .avatar-bot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        @media (max-width: 768px) { .site-footer { bottom: 8px; padding: 8px 10px; } .threeD-panel { width: 260px; height: 190px; left: 10px; bottom: 10px; } }
-
-        /* Footer: full-width, not fixed */
-        .site-footer { width: 100%; max-width: 1200px; margin: 24px auto 8px; padding: 12px 16px; border-radius: 14px; background: rgba(16,18,28,0.45); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content: space-between; }
-        .site-footer .footer-title { color: #d6d6d6; font-weight: 700; font-size: .95rem; }
-        .site-footer .footer-icons { display: inline-flex; gap: 8px; }
-
-        /* Robust input layout */
-        .chat-input-container { width: 100%; box-sizing: border-box; }
-        .chat-input { width: 100%; }
-        .input-field { width: 100%; min-width: 0; }
-
-        /* About modal polish */
-        .about-modal { padding: 26px; position: relative; }
-        .about-header { display:flex; align-items:flex-end; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
-        .about-title h2 { margin: 0; font-size: 1.5rem; }
-        .about-title .subtitle { margin: 6px 0 0; color:#aab2c5; }
-        .about-badges { display:flex; gap:8px; flex-wrap: wrap; }
-        .badge { padding: 6px 10px; border-radius: 999px; background: rgba(37,99,235,0.12); border:1px solid rgba(37,99,235,0.35); color:#cfe0ff; font-weight:700; font-size:.8rem; }
-        .about-grid { display:grid; grid-template-columns: 1.5fr 1fr; gap: 18px; margin-top: 6px; }
-        .feature-list { margin: 10px 0 0 18px; color:#d7dce7; }
-        .feature-list li { margin: 6px 0; }
-        .about-stats { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .stat { background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 12px; }
-        .stat-label { display:block; color:#9aa5b5; font-size:.78rem; text-transform: uppercase; letter-spacing:.6px; }
-        .stat-value { display:block; color:#fff; font-weight:800; margin-top: 2px; }
-        .about-note { margin-top: 12px; color:#aab2c5; }
-        @media (max-width: 820px){ .about-grid { grid-template-columns: 1fr; } }
-
-        /* Animated background */
-        body { 
-            background: 
-                radial-gradient(1200px 600px at 10% 10%, rgba(37, 99, 235, 0.18), transparent 40%),
-                radial-gradient(900px 500px at 80% 20%, rgba(0, 212, 255, 0.16), transparent 45%),
-                radial-gradient(800px 600px at 40% 85%, rgba(155, 89, 182, 0.14), transparent 45%),
-                linear-gradient(135deg, #090d19 0%, #0b0f1f 50%, #0a0d18 100%);
-            background-size: 200% 200%;
-            animation: bgShift 48s ease-in-out infinite alternate;
+            .about-grid { 
+                grid-template-columns: 1fr; 
+            }
         }
     </style>
 </head>
 
+<body>
     <!-- Top-right social buttons -->
     <div class="top-right-icons">
         <a class="icon-btn" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
@@ -712,51 +966,117 @@
         </a>
         <button class="about-btn" id="aboutBtn" type="button">About</button>
     </div>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h1>Polymarket AI Advisor</h1>
-            <p>Intelligent insights on prediction markets with real-time analysis</p>
-        </div>
 
-        <div class="chat-messages" id="chatMessages">
-            <div class="welcome-message">
-                <h2>Welcome to Your AI Betting Advisor</h2>
-                <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
-                <div class="example-questions">
-                    <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
-                        Premier League winner predictions
-                    </div>
-                    <div class="example-question" onclick="askQuestion('What are the Fed interest rate predictions?')">
-                        Federal Reserve rate predictions
-                    </div>
-                    <div class="example-question" onclick="askQuestion('Show me the highest volume markets')">
-                        Highest volume betting markets
-                    </div>
-                    <div class="example-question" onclick="askQuestion('What NFL games should I bet on?')">
-                        NFL betting recommendations
+    <!-- Main content area -->
+    <div class="main-content">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h1>Polymarket AI Advisor</h1>
+                <p>Intelligent insights on prediction markets with real-time analysis</p>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <h2>Welcome to Your AI Betting Advisor</h2>
+                    <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
+                    <div class="example-questions">
+                        <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
+                            Premier League winner predictions
+                        </div>
+                        <div class="example-question" onclick="askQuestion('What are the Fed interest rate predictions?')">
+                            Federal Reserve rate predictions
+                        </div>
+                        <div class="example-question" onclick="askQuestion('Show me the highest volume markets')">
+                            Highest volume betting markets
+                        </div>
+                        <div class="example-question" onclick="askQuestion('What NFL games should I bet on?')">
+                            NFL betting recommendations
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <span>AI is analyzing markets...</span>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="chat-input">
+                    <textarea 
+                        class="input-field" 
+                        id="messageInput" 
+                        placeholder="Ask me about any betting opportunity..."
+                        rows="1"
+                    ></textarea>
+                    <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="typing-indicator" id="typingIndicator">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <span>AI is analyzing markets...</span>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <span class="footer-title">Polymarket AI Advisor</span>
+        <div class="footer-icons">
+            <a class="icon-btn" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1).png" alt="Twitter" />
+            </a>
+            <a class="icon-btn" href="https://polymarket.com" target="_blank" rel="noopener" aria-label="Polymarket">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
+            </a>
+            <a class="icon-btn" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c4422ee520797f737eea3f_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(1).png" alt="GitHub" />
+            </a>
         </div>
+    </footer>
 
-        <div class="chat-input-container">
-            <div class="chat-input">
-                <textarea 
-                    class="input-field" 
-                    id="messageInput" 
-                    placeholder="Ask me about any betting opportunity..."
-                    rows="1"
-                ></textarea>
-                <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
+    <!-- 3D Character Panel -->
+    <div class="threeD-panel" id="threeDPanel">
+        <div class="threeD-header">
+            <span>3D Character</span>
+            <button class="panel-close" id="closeThreeDPanel" type="button">Close</button>
+        </div>
+        <div class="threeD-body">
+            <div class="threeD-placeholder">3D model coming soon</div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="aboutModal" style="display:none;">
+        <div class="modal-content about-modal">
+            <button class="modal-close" id="aboutClose" type="button">×</button>
+            <div class="about-header">
+                <div class="about-title">
+                    <h2>Meet PolyGF</h2>
+                    <p class="subtitle">AI market analyst and autonomous trader</p>
+                </div>
+                <div class="about-badges">
+                    <span class="badge">Polymarket Expert</span>
+                    <span class="badge">LLM-Powered</span>
+                    <span class="badge">Live Strategy</span>
+                </div>
             </div>
+            <div class="about-grid">
+                <div class="about-copy">
+                    <p>PolyGF analyzes prediction markets and surfaces high-conviction opportunities with clear reasoning and risk-aware sizing.</p>
+                    <ul class="feature-list">
+                        <li>Signals blend market depth, liquidity and momentum</li>
+                        <li>Transparent thesis, scenarios, and catalysts for each idea</li>
+                        <li>Portfolio discipline: caps, Kelly-style sizing and stop logic</li>
+                        <li>Roadmap: autonomous trading with transparent performance</li>
+                    </ul>
+                </div>
+                <div class="about-stats">
+                    <div class="stat"><span class="stat-label">Focus</span><span class="stat-value">Prediction markets</span></div>
+                    <div class="stat"><span class="stat-label">Engine</span><span class="stat-value">LLM + ranker</span></div>
+                    <div class="stat"><span class="stat-label">Funding</span><span class="stat-value">10% creator rewards</span></div>
+                    <div class="stat"><span class="stat-label">Buybacks</span><span class="stat-value">90% to $POLYGF</span></div>
+                </div>
+            </div>
+            <div class="about-note">PolyGF will livestream trades on pump.fun and aims to become the top trader on Polymarket.</div>
         </div>
     </div>
 
@@ -821,20 +1141,38 @@
             });
 
             sendButton.addEventListener('click', sendMessage);
+            
             // About modal handlers
             const aboutBtn = document.getElementById('aboutBtn');
             const aboutModal = document.getElementById('aboutModal');
             const aboutClose = document.getElementById('aboutClose');
+            
             if (aboutBtn && aboutModal) {
-                aboutBtn.addEventListener('click', () => { aboutModal.style.display = 'flex'; });
-                if (aboutClose) aboutClose.addEventListener('click', () => { aboutModal.style.display = 'none'; });
-                aboutModal.addEventListener('click', (e) => { if (e.target === aboutModal) aboutModal.style.display = 'none'; });
+                aboutBtn.addEventListener('click', () => { 
+                    aboutModal.style.display = 'flex'; 
+                });
+                
+                if (aboutClose) {
+                    aboutClose.addEventListener('click', () => { 
+                        aboutModal.style.display = 'none'; 
+                    });
+                }
+                
+                aboutModal.addEventListener('click', (e) => { 
+                    if (e.target === aboutModal) {
+                        aboutModal.style.display = 'none'; 
+                    }
+                });
             }
+            
             // 3D panel close handler
             const closeThreeDPanel = document.getElementById('closeThreeDPanel');
             const threeDPanel = document.getElementById('threeDPanel');
+            
             if (closeThreeDPanel && threeDPanel) {
-                closeThreeDPanel.addEventListener('click', () => { threeDPanel.style.display = 'none'; });
+                closeThreeDPanel.addEventListener('click', () => { 
+                    threeDPanel.style.display = 'none'; 
+                });
             }
         }
 
@@ -890,23 +1228,17 @@
         }
 
         function formatAIResponse(response) {
-            // Format the AI response with proper HTML structure for better readability
             let formattedResponse = response;
             
-            // Add paragraph breaks for better formatting
             formattedResponse = formattedResponse
                 .replace(/\n\n/g, '</p><p>')
                 .replace(/\n/g, '<br>');
             
-            // Wrap in paragraph tags
             if (!formattedResponse.startsWith('<')) {
                 formattedResponse = '<p>' + formattedResponse + '</p>';
             }
             
-            // Format numbered lists
             formattedResponse = formattedResponse.replace(/(\d+\.\s)/g, '<br><strong>$1</strong>');
-            
-            // Bold key phrases
             formattedResponse = formattedResponse.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             
             return `<div class="ai-response">${formattedResponse}</div>`;
@@ -1068,7 +1400,6 @@ Provide your analysis and predictions based on this market data.
             const outcome1Class = outcome1.price > 0.6 ? 'favored' : outcome1.price < 0.4 ? 'underdog' : 'neutral';
             const outcome2Class = outcome2.price > 0.6 ? 'favored' : outcome2.price < 0.4 ? 'underdog' : 'neutral';
             
-            
             return `
                 <div class="market-card">
                     <div class="market-header">
@@ -1168,7 +1499,13 @@ Format your response clearly with proper structure and paragraphs.
             
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            if (sender === "user") { avatar.classList.add("avatar-user"); avatar.textContent = "YOU"; } else { avatar.classList.add("avatar-bot"); avatar.innerHTML = "<img src=\"https://placehold.co/44x44\" alt=\"PolyGF\" />"; }
+            if (sender === "user") { 
+                avatar.classList.add("avatar-user"); 
+                avatar.textContent = "YOU"; 
+            } else { 
+                avatar.classList.add("avatar-bot"); 
+                avatar.innerHTML = "<img src=\"https://placehold.co/44x44/000000/ffffff?text=AI\" alt=\"PolyGF\" />"; 
+            }
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
@@ -1243,6 +1580,7 @@ Format your response clearly with proper structure and paragraphs.
                             relevantMarkets.forEach((market) => {
                                 const marketDiv = document.createElement('div');
                                 marketDiv.innerHTML = createMarketCard(market, 0);
+                                marketsSection.appendChild(marketDiv);
                             });
                             
                             element.appendChild(marketsSection);
@@ -1278,66 +1616,5 @@ Format your response clearly with proper structure and paragraphs.
             console.error('Unhandled promise rejection:', e.reason);
         });
     </script>
-    <footer class="site-footer">
-        <span class="footer-title">Polymarket AI Advisor</span>
-        <div class="footer-icons">
-            <a class="icon-btn" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">
-                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1).png" alt="Twitter" />
-            </a>
-            <a class="icon-btn" href="https://polymarket.com" target="_blank" rel="noopener" aria-label="Polymarket">
-                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
-            </a>
-            <a class="icon-btn" href="#" target="_blank" rel="noopener" aria-label="GitHub">
-                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c4422ee520797f737eea3f_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(1).png" alt="GitHub" />
-            </a>
-</footer>
-
-    <div class="threeD-panel" id="threeDPanel">
-        <div class="threeD-header">
-            <span>3D Character</span>
-            <button class="panel-close" id="closeThreeDPanel" type="button">Close</button>
-        </div>
-        <div class="threeD-body">
-            <div class="threeD-placeholder">3D model coming soon</div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="aboutModal" style="display:none;">
-        <div class="modal-content about-modal">
-            <button class="modal-close" id="aboutClose" type="button">Close</button>
-            <div class="about-header">
-                <div class="about-title">
-                    <h2>Meet PolyGF</h2>
-                    <p class="subtitle">AI market analyst and autonomous trader</p>
-                </div>
-                <div class="about-badges">
-                    <span class="badge">Polymarket Expert</span>
-                    <span class="badge">LLM-Powered</span>
-                    <span class="badge">Live Strategy</span>
-                </div>
-            </div>
-            <div class="about-grid">
-                <div class="about-copy">
-                    <p>PolyGF analyzes prediction markets and surfaces high-conviction opportunities with clear reasoning and risk-aware sizing.</p>
-                    <ul class="feature-list">
-                        <li>Signals blend market depth, liquidity and momentum</li>
-                        <li>Transparent thesis, scenarios, and catalysts for each idea</li>
-                        <li>Portfolio discipline: caps, Kelly-style sizing and stop logic</li>
-                        <li>Roadmap: autonomous trading with transparent performance</li>
-                    </ul>
-                </div>
-                <div class="about-stats">
-                    <div class="stat"><span class="stat-label">Focus</span><span class="stat-value">Prediction markets</span></div>
-                    <div class="stat"><span class="stat-label">Engine</span><span class="stat-value">LLM + ranker</span></div>
-                    <div class="stat"><span class="stat-label">Funding</span><span class="stat-value">10% creator rewards</span></div>
-                    <div class="stat"><span class="stat-label">Buybacks</span><span class="stat-value">90% to $POLYGF</span></div>
-                </div>
-            </div>
-            <div class="about-note">PolyGF will livestream trades on pump.fun and aims to become the top trader on Polymarket.</div>
-        </div>
-    </div>
 </body>
 </html>
-
-
-
