@@ -684,9 +684,11 @@
             
             try {
                 isLoading = true;
+                const relevantMarkets = findRelevantMarkets(message);
                 const response = await getAIResponse(message);
                 hideTypingIndicator();
-                addMessage('bot', response);
+                // Pass markets separately so they appear instantly after typing
+                addMessage('bot', response, relevantMarkets);
             } catch (error) {
                 console.error('Error getting AI response:', error);
                 hideTypingIndicator();
@@ -700,7 +702,8 @@
             const relevantMarkets = findRelevantMarkets(userMessage);
             const context = createAIContext(userMessage, relevantMarkets);
             const aiResponse = await callOpenRouterAPI(context);
-            return formatResponseWithMarkets(aiResponse, relevantMarkets);
+            // Return just the AI response, markets will be added separately
+            return aiResponse;
         }
 
         function findRelevantMarkets(query) {
