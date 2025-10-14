@@ -1553,7 +1553,7 @@
             if (!message) return;
             
             if (!polymarketData) {
-                alert('Market data is still loading. Please wait a moment and try again.');
+                alert('市场数据仍在加载中，请稍候再试。');
                 return;
             }
 
@@ -1577,7 +1577,7 @@
             } catch (error) {
                 console.error('Error getting AI response:', error);
                 hideTypingIndicator();
-                addMessage('bot', 'I encountered an error while processing your request. Please try again.');
+                addMessage('bot', '处理您的请求时遇到错误，请重试。');
             } finally {
                 isLoading = false;
             }
@@ -1704,12 +1704,12 @@ async function findRelevantMarketsWithAI(userQuery) {
     }));
     
     const aiContext = `
-User Query: "${userQuery}"
+用户查询："${userQuery}"
 
-Available Markets:
+可用市场：
 ${JSON.stringify(marketSummaries, null, 2)}
 
-Task: Find the 3-4 most relevant markets for this query. Return only a JSON array of indices like [2, 15, 23]. Consider semantic relevance and market activity.`;
+任务：为此查询找到3-4个最相关的市场。仅返回索引的JSON数组，如[2, 15, 23]。考虑语义相关性和市场活动。`;
 
     try {
         const response = await callOpenRouterAPI(aiContext);
@@ -1747,23 +1747,23 @@ Task: Find the 3-4 most relevant markets for this query. Return only a JSON arra
             }));
             
             return `
-User Question: "${userMessage}"
+用户问题："${userMessage}"
 
-Relevant Betting Markets Data:
+相关投注市场数据：
 ${JSON.stringify(marketData, null, 2)}
 
-Instructions:
-1. Analyze the provided betting markets data relevant to the user's question
-2. Give your expert opinion on the most likely outcomes based on market data
-3. Explain your reasoning using odds, volume, and market sentiment
-4. Be conversational and engaging
-5. Format your response with clear structure and paragraphs
-6. Use bullet points or numbered lists where appropriate
-7. Consider volume and liquidity as indicators of market confidence
-8. Don't mention that you're looking at JSON data - analyze the markets naturally
-9. Keep sections well-organized with clear headings when discussing multiple topics
+说明：
+1. 分析提供的与用户问题相关的投注市场数据
+2. 根据市场数据给出您对最可能结果的专家意见
+3. 使用赔率、交易量和市场情绪解释您的推理
+4. 保持对话式和引人入胜
+5. 使用清晰的结构和段落格式化您的回复
+6. 适当使用要点或编号列表
+7. 将交易量和流动性视为市场信心的指标
+8. 不要提及您正在查看JSON数据 - 自然地分析市场
+9. 在讨论多个主题时保持各部分井井有条，使用清晰的标题
 
-Provide your analysis and predictions based on this market data.
+根据此市场数据提供您的分析和预测。
 `;
         }
 
@@ -1775,14 +1775,14 @@ Provide your analysis and predictions based on this market data.
         apiKey = keyData.apiKey;
     } catch (error) {
         console.error('Failed to get API key:', error);
-        throw new Error('API key not available');
+        throw new Error('API密钥不可用');
     }
 
     // Check if this is a market search request
-    const isMarketSearch = context.includes('Available Markets:');
+    const isMarketSearch = context.includes('可用市场：');
     const systemMessage = isMarketSearch 
-        ? 'You are a data analyst that finds relevant prediction markets. Return only the requested JSON array format.'
-        : 'You are an expert betting analyst who provides intelligent insights on prediction markets. Analyze market data and give clear, well-formatted predictions with reasoning.';
+        ? '您是一位数据分析师，负责查找相关的预测市场。仅返回请求的JSON数组格式。'
+        : '您是预测市场的专家投注分析师。分析市场数据并提供清晰、格式良好的预测和推理。';
 
     const response = await fetch(CONFIG.OPENROUTER_API_URL, {
         method: 'POST',
@@ -1811,7 +1811,7 @@ Provide your analysis and predictions based on this market data.
     
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`OpenRouter API error: ${response.status} - ${errorText}`);
+        throw new Error(`OpenRouter API错误：${response.status} - ${errorText}`);
     }
     
     const data = await response.json();
@@ -1826,7 +1826,7 @@ Provide your analysis and predictions based on this market data.
     avatar.className = 'message-avatar';
     if (sender === "user") { 
         avatar.classList.add("avatar-user"); 
-        avatar.textContent = "YOU"; 
+        avatar.textContent = "您"; 
     } else { 
         avatar.classList.add("avatar-bot"); 
         avatar.innerHTML = "<img src=\"https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68e3e486ad84ad7e7c12c57e_New%20Project%20(30).png\" alt=\"Molly\" />"; 
@@ -1847,7 +1847,7 @@ Provide your analysis and predictions based on this market data.
             marketsSection.className = 'markets-section';
             marketsSection.innerHTML = `
                 <div class="markets-header">
-                    📊 Relevant Markets
+                    📊 相关市场
                 </div>
             `;
             
@@ -1887,27 +1887,27 @@ Provide your analysis and predictions based on this market data.
         <div class="market-card">
             <div class="market-header">
                 <div class="market-title">${market.title}</div>
-                ${market.image ? `<img src="${market.image}" alt="Market" class="market-image" onerror="this.style.display='none'">` : ''}
+                ${market.image ? `<img src="${market.image}" alt="市场" class="market-image" onerror="this.style.display='none'">` : ''}
             </div>
             <div class="market-outcomes">
                 <div class="outcome ${outcome1Class}">
-                    ${outcome1.name}: ${formatPrice(outcome1.price)}
+                    ${outcome1.name}：${formatPrice(outcome1.price)}
                 </div>
                 <div class="outcome ${outcome2Class}">
-                    ${outcome2.name}: ${formatPrice(outcome2.price)}
+                    ${outcome2.name}：${formatPrice(outcome2.price)}
                 </div>
             </div>
             <div class="market-stats">
                 <div class="stat-item">
-                    <span class="stat-label">24h Volume</span>
+                    <span class="stat-label">24小时交易量</span>
                     <span class="stat-value">${formatVolume(market.volume24h)}</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Total Volume</span>
+                    <span class="stat-label">总交易量</span>
                     <span class="stat-value">${formatVolume(market.volumeTotal)}</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Liquidity</span>
+                    <span class="stat-label">流动性</span>
                     <span class="stat-value">${formatVolume(market.liquidity)}</span>
                 </div>
             </div>
@@ -1944,5 +1944,5 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
-        'american_football': ['nfl', 'super bowl', 'american football', 'chiefs',
+
 
