@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polymei 文档</title>
-    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68eec7266e3e0b666e2c7f37_ChatGPT%20Image%20Oct%2014%2C%202025%2C%2010_56_29%20PM.png">
+    <title>Polly Documentation</title>
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68e3e486ad84ad7e7c12c57e_New%20Project%20(30).png">
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: 
                 radial-gradient(1200px 600px at 10% 10%, rgba(37, 99, 235, 0.18), transparent 40%),
                 radial-gradient(900px 500px at 80% 20%, rgba(0, 212, 255, 0.16), transparent 45%),
@@ -362,33 +362,33 @@
     </style>
 </head>
 <body>
-    <a href="/" class="back-link">← 返回聊天</a>
+    <a href="/" class="back-link">← Back to Chat</a>
     
     <div class="container">
         <div class="header">
-            <h1>Polymarket Mei 文档</h1>
-            <p>先进的AI交易系统架构与预测市场分析框架</p>
+            <h1>Polly Documentation</h1>
+            <p>Advanced AI trading system architecture and prediction market analysis framework</p>
         </div>
 
         <div class="nav-tabs">
-            <div class="nav-tab active" onclick="showSection('architecture')">系统架构</div>
-            <div class="nav-tab" onclick="showSection('algorithms')">交易算法</div>
-            <div class="nav-tab" onclick="showSection('streaming')">实时交易</div>
-            <div class="nav-tab" onclick="showSection('api')">API参考</div>
+            <div class="nav-tab active" onclick="showSection('architecture')">System Architecture</div>
+            <div class="nav-tab" onclick="showSection('algorithms')">Trading Algorithms</div>
+            <div class="nav-tab" onclick="showSection('streaming')">Live Trading</div>
+            <div class="nav-tab" onclick="showSection('api')">API Reference</div>
         </div>
 
         <div id="architecture" class="content-section active">
             <div class="doc-card">
-                <h2>🏗️ 核心系统架构</h2>
-                <p>Polymarket Mei 基于高性能 Rust 后端构建，集成 WebAssembly 实现基于浏览器的实时分析。系统采用多线程架构，针对低延迟市场数据处理进行了优化。</p>
+                <h2>🏗️ Core System Architecture</h2>
+                <p>PolyGF is built on a high-performance Rust backend with WebAssembly integration for browser-based real-time analysis. The system employs a multi-threaded architecture optimized for low-latency market data processing.</p>
                 
-                <h3>市场数据接入引擎</h3>
+                <h3>Market Data Ingestion Engine</h3>
                 <div class="code-block">
                     <pre><code><span class="keyword">use</span> <span class="type">tokio</span>::<span class="type">sync</span>::<span class="type">mpsc</span>;
 <span class="keyword">use</span> <span class="type">serde</span>::{<span class="type">Deserialize</span>, <span class="type">Serialize</span>};
 <span class="keyword">use</span> <span class="type">rust_decimal</span>::<span class="type">Decimal</span>;
 
-<span class="comment">// 实时市场数据结构</span>
+<span class="comment">// Real-time market data structure</span>
 <span class="keyword">#[derive(Debug, Clone, Serialize, Deserialize)]</span>
 <span class="keyword">pub struct</span> <span class="type">MarketTick</span> {
     <span class="keyword">pub</span> market_id: <span class="type">String</span>,
@@ -427,26 +427,26 @@
                 <div class="stats-container">
                     <div class="stat-box">
                         <div class="stat-value">500+</div>
-                        <div class="stat-label">监控市场</div>
+                        <div class="stat-label">Markets Monitored</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-value">< 50ms</div>
-                        <div class="stat-label">延迟</div>
+                        <div class="stat-label">Latency</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-value">99.9%</div>
-                        <div class="stat-label">运行时间</div>
+                        <div class="stat-label">Uptime</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-value">24/7</div>
-                        <div class="stat-label">运营</div>
+                        <div class="stat-label">Operation</div>
                     </div>
                 </div>
             </div>
 
             <div class="doc-card">
-                <h2>🧠 神经网络集成</h2>
-                <p>系统利用传统量化模型和现代机器学习技术进行市场预测。</p>
+                <h2>🧠 Neural Network Integration</h2>
+                <p>The system leverages both traditional quantitative models and modern machine learning techniques for market prediction.</p>
                 
                 <div class="code-block">
                     <pre><code><span class="keyword">use</span> <span class="type">candle_core</span>::{<span class="type">Device</span>, <span class="type">Tensor</span>};
@@ -467,12 +467,12 @@
     ) -> <span class="type">Result</span>&lt;<span class="type">Tensor</span>, <span class="type">Box</span>&lt;<span class="keyword">dyn</span> <span class="type">std::error::Error</span>&gt;&gt; {
         <span class="keyword">let</span> <span class="keyword">mut</span> x = <span class="keyword">self</span>.input_layer.<span class="function">forward</span>(features)?;
         
-        <span class="comment">// 通过隐藏层使用ReLU激活进行前向传播</span>
+        <span class="comment">// Forward pass through hidden layers with ReLU activation</span>
         <span class="keyword">for</span> layer <span class="keyword">in</span> &<span class="keyword">self</span>.hidden_layers {
             x = layer.<span class="function">forward</span>(&x)?.<span class="function">relu</span>()?;
         }
         
-        <span class="comment">// 输出概率分布</span>
+        <span class="comment">// Output probability distribution</span>
         <span class="keyword">let</span> output = <span class="keyword">self</span>.output_layer.<span class="function">forward</span>(&x)?.<span class="function">softmax</span>(<span class="number">1</span>)?;
         <span class="type">Ok</span>(output)
     }
@@ -483,10 +483,10 @@
 
         <div id="algorithms" class="content-section">
             <div class="doc-card">
-                <h2>📊 交易算法套件</h2>
-                <p>Polymarket Mei 采用多种复杂算法应对不同市场条件和机会类型。</p>
+                <h2>📊 Trading Algorithm Suite</h2>
+                <p>PolyGF employs multiple sophisticated algorithms for different market conditions and opportunity types.</p>
                 
-                <h3>凯利公式实现</h3>
+                <h3>Kelly Criterion Implementation</h3>
                 <div class="code-block">
                     <pre><code><span class="keyword">use</span> <span class="type">rust_decimal</span>::<span class="type">Decimal</span>;
 <span class="keyword">use</span> <span class="type">rust_decimal_macros</span>::<span class="function">dec</span>;
@@ -505,14 +505,14 @@
         market_odds: <span class="type">Decimal</span>,
         confidence_level: <span class="type">Decimal</span>
     ) -> <span class="type">Decimal</span> {
-        <span class="keyword">let</span> b = market_odds - <span class="function">dec!</span>(<span class="number">1.0</span>); <span class="comment">// 净赔率</span>
+        <span class="keyword">let</span> b = market_odds - <span class="function">dec!</span>(<span class="number">1.0</span>); <span class="comment">// Net odds</span>
         <span class="keyword">let</span> p = <span class="keyword">self</span>.win_probability * confidence_level;
         <span class="keyword">let</span> q = <span class="function">dec!</span>(<span class="number">1.0</span>) - p;
         
-        <span class="comment">// 凯利公式: f = (bp - q) / b</span>
+        <span class="comment">// Kelly formula: f = (bp - q) / b</span>
         <span class="keyword">let</span> kelly_fraction = (b * p - q) / b;
         
-        <span class="comment">// 应用安全约束</span>
+        <span class="comment">// Apply safety constraints</span>
         <span class="keyword">let</span> constrained_fraction = kelly_fraction
             .<span class="function">min</span>(<span class="keyword">self</span>.max_allocation)
             .<span class="function">max</span>(<span class="function">dec!</span>(<span class="number">0.0</span>));
@@ -542,29 +542,29 @@
                 <div class="feature-grid">
                     <div class="feature-card">
                         <div class="feature-icon">⚡</div>
-                        <h4>动量分析</h4>
-                        <p>使用价格行为、交易量和流动性动量指标进行实时趋势检测。</p>
+                        <h4>Momentum Analysis</h4>
+                        <p>Real-time trend detection using price action, volume, and liquidity momentum indicators.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">📈</div>
-                        <h4>套利检测</h4>
-                        <p>通过自动价格比较算法识别跨市场套利机会。</p>
+                        <h4>Arbitrage Detection</h4>
+                        <p>Cross-market arbitrage opportunities identified through automated price comparison algorithms.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🎯</div>
-                        <h4>均值回归</h4>
-                        <p>统计模型识别预测市场中的超买/超卖状态。</p>
+                        <h4>Mean Reversion</h4>
+                        <p>Statistical models identifying overbought/oversold conditions in prediction markets.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🔍</div>
-                        <h4>事件驱动信号</h4>
-                        <p>新闻情绪分析和事件关联，用于市场驱动信息检测。</p>
+                        <h4>Event-Driven Signals</h4>
+                        <p>News sentiment analysis and event correlation for market-moving information detection.</p>
                     </div>
                 </div>
             </div>
 
             <div class="doc-card">
-                <h2>🛡️ 风险管理框架</h2>
+                <h2>🛡️ Risk Management Framework</h2>
                 <div class="code-block">
                     <pre><code><span class="keyword">#[derive(Debug, Clone)]</span>
 <span class="keyword">pub struct</span> <span class="type">RiskManager</span> {
@@ -603,10 +603,10 @@
 
         <div id="streaming" class="content-section">
             <div class="doc-card">
-                <h2>🎥 实时交易流实现</h2>
-                <p>Polymarket Mei 将通过实时流式传输所有交易决策、分析和性能指标实现完全透明。</p>
+                <h2>🎥 Live Trading Stream Implementation</h2>
+                <p>PolyGF will feature complete transparency through live streaming of all trading decisions, analysis, and performance metrics.</p>
                 
-                <h3>流媒体架构</h3>
+                <h3>Streaming Architecture</h3>
                 <div class="code-block">
                     <pre><code><span class="keyword">use</span> <span class="type">tokio_tungstenite</span>::{<span class="type">WebSocketStream</span>, <span class="type">Message</span>};
 <span class="keyword">use</span> <span class="type">futures_util</span>::{<span class="type">SinkExt</span>, <span class="type">StreamExt</span>};
@@ -624,174 +624,13 @@
 
 <span class="keyword">#[derive(Debug, Serialize)]</span>
 <span class="keyword">pub enum</span> <span class="type">TradingEventType</span> {
-    <span class="type">MarketScan</span>,        <span class="comment">// 市场扫描</span>
-    <span class="type">SignalDetected</span>,    <span class="comment">// 检测到信号</span>
-    <span class="type">RiskEvaluation</span>,    <span class="comment">// 风险评估</span>
-    <span class="type">TradeExecution</span>,    <span class="comment">// 交易执行</span>
-    <span class="type">PositionUpdate</span>,    <span class="comment">// 仓位更新</span>
-    <span class="type">PerformanceMetrics</span>, <span class="comment">// 性能指标</span>
+    <span class="type">MarketScan</span>,
+    <span class="type">SignalDetected</span>,
+    <span class="type">RiskEvaluation</span>,
+    <span class="type">TradeExecution</span>,
+    <span class="type">PositionUpdate</span>,
+    <span class="type">PerformanceMetrics</span>,
 }
 
 <span class="keyword">pub struct</span> <span class="type">LiveStreamManager</span> {
-    viewers: <span class="type">Vec</span>&lt;<span class="type">WebSocketStream</span>&lt;<span class="type">TcpStream</span>&gt;&gt;,
-    event_queue: <span class="type">mpsc::Receiver</span>&lt;<span class="type">LiveTradingEvent</span>&gt;,
-}
-
-<span class="keyword">impl</span> <span class="type">LiveStreamManager</span> {
-    <span class="keyword">pub async fn</span> <span class="function">broadcast_event</span>(&<span class="keyword">mut</span> <span class="keyword">self</span>, event: <span class="type">LiveTradingEvent</span>) {
-        <span class="keyword">let</span> json = <span class="type">serde_json</span>::<span class="function">to_string</span>(&event).<span class="function">unwrap</span>();
-        <span class="keyword">let</span> message = <span class="type">Message</span>::<span class="type">Text</span>(json);
-        
-        <span class="keyword">for</span> viewer <span class="keyword">in</span> &<span class="keyword">mut</span> <span class="keyword">self</span>.viewers {
-            <span class="keyword">let</span> _ = viewer.<span class="function">send</span>(message.<span class="function">clone</span>()).<span class="keyword">await</span>;
-        }
-    }
-}</code></pre>
-                </div>
-
-                <h3>流式特性</h3>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">📡</div>
-                        <h4>实时决策</h4>
-                        <p>所有交易决策的实时流式传输，包括完整推理过程。</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h4>性能指标</h4>
-                        <p>实时性能追踪，包括盈亏、夏普比率和风险指标。</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <h4>市场分析</h4>
-                        <p>所有市场扫描和分析过程的详细可视化。</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💬</div>
-                        <h4>交互式聊天</h4>
-                        <p>在直播期间与系统进行实时互动和提问。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="api" class="content-section">
-            <div class="doc-card">
-                <h2>🔌 API 参考</h2>
-                <p>Polymarket Mei 提供全面的 REST API 用于系统集成和自定义应用程序。</p>
-                
-                <h3>身份验证</h3>
-                <div class="code-block">
-                    <pre><code><span class="keyword">use</span> <span class="type">reqwest</span>::<span class="type">Client</span>;
-<span class="keyword">use</span> <span class="type">serde_json</span>::<span class="type">json</span>;
-
-<span class="keyword">async fn</span> <span class="function">authenticate</span>(api_key: &<span class="type">str</span>) -> <span class="type">Result</span>&lt;<span class="type">String</span>&gt; {
-    <span class="keyword">let</span> client = <span class="type">Client</span>::<span class="function">new</span>();
-    
-    <span class="keyword">let</span> response = client
-        .<span class="function">post</span>(<span class="string">"https://api.polymarketmei.com/v1/auth"</span>)
-        .<span class="function">header</span>(<span class="string">"X-API-Key"</span>, api_key)
-        .<span class="function">send</span>()
-        .<span class="keyword">await</span>?;
-        
-    <span class="keyword">let</span> token = response.<span class="function">json</span>::&lt;<span class="type">AuthResponse</span>&gt;().<span class="keyword">await</span>?.access_token;
-    <span class="type">Ok</span>(token)
-}</code></pre>
-                </div>
-
-                <h3>市场数据端点</h3>
-                <div class="code-block">
-                    <pre><code><span class="comment">// 获取市场列表</span>
-<span class="string">GET /v1/markets</span>
-
-<span class="comment">// 获取特定市场详情</span>
-<span class="string">GET /v1/markets/{market_id}</span>
-
-<span class="comment">// 获取实时市场数据</span>
-<span class="string">GET /v1/markets/{market_id}/ticker</span>
-
-<span class="comment">// 获取历史价格数据</span>
-<span class="string">GET /v1/markets/{market_id}/history?interval=1h&limit=100</span>
-
-<span class="comment">// 订阅WebSocket实时数据</span>
-<span class="string">WS wss://stream.polymarketmei.com/v1/markets</span></code></pre>
-                </div>
-
-                <h3>交易端点</h3>
-                <div class="code-block">
-                    <pre><code><span class="comment">// 获取当前仓位</span>
-<span class="string">GET /v1/positions</span>
-
-<span class="comment">// 执行交易</span>
-<span class="string">POST /v1/trades</span>
-{
-  <span class="string">"market_id"</span>: <span class="string">"election-2024"</span>,
-  <span class="string">"side"</span>: <span class="string">"YES"</span>,
-  <span class="string">"amount"</span>: <span class="number">100.0</span>,
-  <span class="string">"price_limit"</span>: <span class="number">0.65</span>
-}
-
-<span class="comment">// 获取交易历史</span>
-<span class="string">GET /v1/trades/history?from=2024-01-01&to=2024-12-31</span>
-
-<span class="comment">// 获取性能指标</span>
-<span class="string">GET /v1/performance/metrics</span></code></pre>
-                </div>
-
-                <div class="warning-box">
-                    <h4>⚠️ 速率限制</h4>
-                    <p>API 请求限制为每分钟 60 次，WebSocket 连接限制为每个账户 5 个并发连接。超过限制将返回 429 状态码。</p>
-                </div>
-            </div>
-
-            <div class="doc-card">
-                <h2>📚 SDK 支持</h2>
-                <p>官方 SDK 可用于多种编程语言。</p>
-                
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🦀</div>
-                        <h4>Rust SDK</h4>
-                        <p>原生 Rust 客户端库，提供完整类型安全和异步支持。</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🐍</div>
-                        <h4>Python SDK</h4>
-                        <p>适用于数据科学和量化分析的 Python 客户端。</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📜</div>
-                        <h4>TypeScript SDK</h4>
-                        <p>用于 Web 应用程序和 Node.js 后端的现代 TypeScript 库。</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">☕</div>
-                        <h4>Go SDK</h4>
-                        <p>适用于高性能服务器应用程序的 Go 客户端。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function showSection(sectionId) {
-            // 隐藏所有内容区域
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // 移除所有标签页的激活状态
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 显示选中的内容区域
-            document.getElementById(sectionId).classList.add('active');
-            
-            // 激活对应的标签页
-            event.target.classList.add('active');
-        }
-    </script>
-</body>
-</html>
+    viewers: <span class="type">Vec</span>&lt;<span class="type">WebSocketStream</span>&lt
