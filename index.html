@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polywaifu | Betting Advisor</title>
+    <title>Polywaifu | Betting Companion</title>
     <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/68f018d92b0ff7db6b8933d2_New%20Project%20(44).png">
     <style>
         * {
@@ -1214,13 +1214,12 @@
     <div class="main-content">
         <div class="chat-container">
             <div class="chat-header">
-                <h1>Polywaifu: Polymarket AI Advisor</h1>
-                <p>CA:</p>
+                <h1>Polywaifu: Polymarket AI Companion</h1>
             </div>
 
             <div class="chat-messages" id="chatMessages">
                 <div class="welcome-message">
-                    <h2>Welcome to Your AI Betting Advisor</h2>
+                    <h2>Welcome to Your AI Betting Companion</h2>
                     <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
                     <div class="example-questions">
                         <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
@@ -1791,7 +1790,7 @@ Provide your analysis and predictions based on this market data.
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
             'HTTP-Referer': window.location.origin,
-            'X-Title': 'Polymarket AI Advisor'
+            'X-Title': 'Polymarket AI Companion'
         },
         body: JSON.stringify({
             model: CONFIG.MODEL,
@@ -1945,6 +1944,7 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
+
 
 
 
