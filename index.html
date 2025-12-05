@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PolyMiko | Betting Companion</title>
-    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/68f018d92b0ff7db6b8933d2_New%20Project%20(44).png">
+    <title>KalshiMate | Betting Companion</title>
+    <link rel="icon" type="image/png" href="https://kalshi.com/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -15,9 +15,9 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: 
-                radial-gradient(1200px 600px at 10% 10%, rgba(37, 99, 235, 0.18), transparent 40%),
-                radial-gradient(900px 500px at 80% 20%, rgba(0, 212, 255, 0.16), transparent 45%),
-                radial-gradient(800px 600px at 40% 85%, rgba(155, 89, 182, 0.14), transparent 45%),
+                radial-gradient(1200px 600px at 10% 10%, rgba(0, 194, 133, 0.18), transparent 40%),
+                radial-gradient(900px 500px at 80% 20%, rgba(0, 194, 133, 0.14), transparent 45%),
+                radial-gradient(800px 600px at 40% 85%, rgba(0, 50, 33, 0.20), transparent 45%),
                 linear-gradient(135deg, #090d19 0%, #0b0f1f 50%, #0a0d18 100%);
             background-size: 200% 200%;
             animation: bgShift 48s ease-in-out infinite alternate;
@@ -53,7 +53,7 @@
     border-bottom: 1px solid rgba(255,255,255,0.12); 
     color: #e5e5e5; 
     font-weight: 700; 
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
+    background: linear-gradient(135deg, rgba(0, 194, 133, 0.1), rgba(0, 50, 33, 0.05));
     position: relative;
 }
 
@@ -64,7 +64,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8, #7c3aed);
+    background: linear-gradient(90deg, #00C285, #0AC285, #003221);
 }
 
 .panel-close { 
@@ -98,14 +98,14 @@
     height: 100%;
     border-radius: 12px;
     object-fit: cover;
-    border: 2px solid rgba(37, 99, 235, 0.3);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+    border: 2px solid rgba(0, 194, 133, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 194, 133, 0.2);
 }
 
 .character-gif:hover {
     transform: scale(1.05);
-    border-color: rgba(37, 99, 235, 0.5);
-    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.3);
+    border-color: rgba(0, 194, 133, 0.5);
+    box-shadow: 0 12px 25px rgba(0, 194, 133, 0.3);
 }
 
         /* Enhanced background glow */
@@ -125,14 +125,14 @@
         body::before { 
             top: -20vmax; 
             left: -10vmax; 
-            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.45), rgba(29, 78, 216, 0.25), transparent 60%); 
+            background: radial-gradient(circle at center, rgba(0, 194, 133, 0.45), rgba(0, 50, 33, 0.25), transparent 60%); 
             animation: floatA 26s ease-in-out infinite; 
         }
 
         body::after { 
             bottom: -25vmax; 
             right: -15vmax; 
-            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.35), rgba(155, 89, 182, 0.25), transparent 60%); 
+            background: radial-gradient(circle at center, rgba(0, 194, 133, 0.35), rgba(10, 194, 133, 0.25), transparent 60%); 
             animation: floatB 34s ease-in-out infinite; 
         }
 
@@ -311,7 +311,7 @@
         }
 
         .avatar-user {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
         }
 
         .avatar-bot {
@@ -338,7 +338,7 @@
         }
 
         .message.user .message-content {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -385,8 +385,8 @@
         }
 
         .example-question:hover {
-            background: rgba(37, 99, 235, 0.1);
-            border-color: rgba(37, 99, 235, 0.3);
+            background: rgba(0, 194, 133, 0.1);
+            border-color: rgba(0, 194, 133, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
@@ -409,7 +409,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #2563eb;
+            background: #00C285;
             animation: typing 1.5s infinite;
         }
 
@@ -458,13 +458,13 @@
 
         .input-field:focus {
             outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #00C285;
+            box-shadow: 0 0 0 3px rgba(0, 194, 133, 0.1);
             background: rgba(255, 255, 255, 0.12);
         }
 
         .send-button {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
             color: white;
             border: none;
             padding: 0;
@@ -476,15 +476,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 194, 133, 0.3);
             font-size: 1.2rem;
             flex-shrink: 0;
         }
 
         .send-button:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            box-shadow: 0 6px 25px rgba(0, 194, 133, 0.4);
+            background: linear-gradient(135deg, #0AC285, #003221);
         }
 
         .send-button:disabled {
@@ -541,7 +541,7 @@
         .footer-logo-icon {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -580,8 +580,8 @@
         }
 
         .footer-social-link:hover {
-            background: rgba(37, 99, 235, 0.1);
-            border-color: rgba(37, 99, 235, 0.3);
+            background: rgba(0, 194, 133, 0.1);
+            border-color: rgba(0, 194, 133, 0.3);
             transform: translateY(-2px);
         }
 
@@ -676,8 +676,8 @@
 }
 
 .market-card:hover {
-    border-color: rgba(37, 99, 235, 0.5);
-    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.2);
+    border-color: rgba(0, 194, 133, 0.5);
+    box-shadow: 0 12px 35px rgba(0, 194, 133, 0.2);
     transform: translateY(-2px);
 }
 
@@ -688,7 +688,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #2563eb, #1d4ed8, #1e40af);
+    background: linear-gradient(90deg, #00C285, #0AC285, #003221);
 }
 
 .market-header {
@@ -732,15 +732,15 @@
 }
 
 .outcome.favored {
-    background: linear-gradient(135deg, #059669, #047857);
+    background: linear-gradient(135deg, #265CFF, #1e4ad4);
     color: white;
-    border-color: rgba(5, 150, 105, 0.3);
+    border-color: rgba(38, 92, 255, 0.3);
 }
 
 .outcome.underdog {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    background: linear-gradient(135deg, #AA00FF, #8800cc);
     color: white;
-    border-color: rgba(220, 38, 38, 0.3);
+    border-color: rgba(170, 0, 255, 0.3);
 }
 
 .outcome.neutral {
@@ -825,7 +825,7 @@
         }
 
         .modal-header {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
+            background: linear-gradient(135deg, rgba(0, 194, 133, 0.1), rgba(0, 50, 33, 0.05));
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding: 32px;
             position: relative;
@@ -838,7 +838,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, #2563eb, #1d4ed8, #7c3aed);
+            background: linear-gradient(90deg, #00C285, #0AC285, #003221);
         }
 
         .modal-close { 
@@ -876,7 +876,7 @@
         .about-avatar {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            background: linear-gradient(135deg, #00C285, #0AC285);
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -884,7 +884,7 @@
             font-size: 32px;
             font-weight: 800;
             color: white;
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 194, 133, 0.3);
         }
 
         .about-hero-content h2 {
@@ -912,9 +912,9 @@
         .badge {
             padding: 8px 16px;
             border-radius: 20px;
-            background: rgba(37,99,235,0.15);
-            border: 1px solid rgba(37,99,235,0.3);
-            color: #93c5fd;
+            background: rgba(0, 194, 133, 0.15);
+            border: 1px solid rgba(0, 194, 133, 0.3);
+            color: #5eead4;
             font-weight: 700;
             font-size: 0.85rem;
             backdrop-filter: blur(10px);
@@ -943,7 +943,7 @@
         .section-icon {
             width: 24px;
             height: 24px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -975,15 +975,15 @@
         }
 
         .feature-item:hover {
-            background: rgba(37, 99, 235, 0.05);
-            border-color: rgba(37, 99, 235, 0.2);
+            background: rgba(0, 194, 133, 0.05);
+            border-color: rgba(0, 194, 133, 0.2);
             transform: translateY(-2px);
         }
 
         .feature-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -1023,19 +1023,19 @@
         }
 
         .stat-card:hover {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
-            border-color: rgba(37, 99, 235, 0.3);
+            background: linear-gradient(135deg, rgba(0, 194, 133, 0.1), rgba(0, 50, 33, 0.05));
+            border-color: rgba(0, 194, 133, 0.3);
             transform: translateY(-2px);
         }
 
-        .stat-value {
+        .stat-card .stat-value {
             font-size: 1.75rem;
             font-weight: 800;
             color: #ffffff;
             margin-bottom: 4px;
         }
 
-        .stat-label {
+        .stat-card .stat-label {
             color: #64748b;
             font-size: 0.85rem;
             font-weight: 600;
@@ -1044,8 +1044,8 @@
         }
 
         .cta-section {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05));
-            border: 1px solid rgba(37, 99, 235, 0.2);
+            background: linear-gradient(135deg, rgba(0, 194, 133, 0.1), rgba(0, 50, 33, 0.05));
+            border: 1px solid rgba(0, 194, 133, 0.2);
             border-radius: 16px;
             padding: 24px;
             text-align: center;
@@ -1083,15 +1083,15 @@
         }
 
         .cta-button.primary {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #00C285, #003221);
             color: white;
             border: none;
         }
 
         .cta-button.primary:hover {
-            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            background: linear-gradient(135deg, #0AC285, #003221);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 194, 133, 0.3);
         }
 
         .cta-button.secondary {
@@ -1191,6 +1191,10 @@
             .footer-legal {
                 justify-content: center;
             }
+            
+            .threeD-panel {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -1198,14 +1202,15 @@
 <body>
     <!-- Top-right social buttons -->
     <div class="top-right-icons">
-    <a class="icon-btn" href="https://twitter.com/MikoPoly" target="_blank" rel="noopener" aria-label="Twitter">
+    <a class="icon-btn" href="https://twitter.com/Kalshi" target="_blank" rel="noopener" aria-label="Twitter">
         <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1).png" alt="Twitter" />
     </a>
-    <a class="icon-btn" href="https://polymarket.com" target="_blank" rel="noopener" aria-label="Polymarket">
-        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
-    </a>
-    <a class="icon-btn" href="https://pump.fun/coin/FzhWcwAmGcC3gc6mpZb3hQDqx4spHskWdbZsd1typump" target="_blank" rel="noopener" aria-label="Pump.fun">
-        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c457abc0279df7fc3eb5a6_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(2).png" alt="Pump.fun" />
+    <a class="icon-btn" href="https://kalshi.com" target="_blank" rel="noopener" aria-label="Kalshi">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#00C285" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="#00C285" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#00C285" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </a>
     <button class="about-btn" id="docsBtn" type="button">Docs</button>
 </div>
@@ -1214,25 +1219,25 @@
     <div class="main-content">
         <div class="chat-container">
             <div class="chat-header">
-                <h1>PolyMiko: Polymarket AI Companion</h1>
+                <h1>KalshiMate: Kalshi AI Companion</h1>
             </div>
 
             <div class="chat-messages" id="chatMessages">
                 <div class="welcome-message">
-                    <h2>Welcome to Your AI Betting Companion</h2>
-                    <p>Ask me about any betting markets and I'll provide data-driven analysis and predictions to help guide your decisions.</p>
+                    <h2>Welcome to Your AI Event Trading Companion</h2>
+                    <p>Ask me about any event contracts and I'll provide data-driven analysis and predictions to help guide your trading decisions.</p>
                     <div class="example-questions">
-                        <div class="example-question" onclick="askQuestion('Who will win the Premier League this season?')">
-                            Premier League winner predictions
-                        </div>
                         <div class="example-question" onclick="askQuestion('What are the Fed interest rate predictions?')">
                             Federal Reserve rate predictions
                         </div>
                         <div class="example-question" onclick="askQuestion('Show me the highest volume markets')">
-                            Highest volume betting markets
+                            Highest volume event contracts
                         </div>
-                        <div class="example-question" onclick="askQuestion('What NFL games should I bet on?')">
-                            NFL betting recommendations
+                        <div class="example-question" onclick="askQuestion('What are the weather event predictions?')">
+                            Weather event contracts
+                        </div>
+                        <div class="example-question" onclick="askQuestion('What economic events should I trade?')">
+                            Economic event recommendations
                         </div>
                     </div>
                 </div>
@@ -1250,7 +1255,7 @@
                     <textarea 
                         class="input-field" 
                         id="messageInput" 
-                        placeholder="Ask me about any betting opportunity..."
+                        placeholder="Ask me about any event contract..."
                         rows="1"
                     ></textarea>
                     <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
@@ -1265,24 +1270,23 @@
             <div class="footer-main">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <div class="footer-logo-icon">
-    <img src="https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/68f018d92b0ff7db6b8933d2_New%20Project%20(44).png" alt="PolyMiko Logo" style="width: 100%; height: 100%; object-fit: contain;">
-</div>
-                        <div class="footer-logo-text">PolyMiko</div>
+                        <div class="footer-logo-icon">K</div>
+                        <div class="footer-logo-text">KalshiMate</div>
                     </div>
                     <p class="footer-description">
-                        Advanced AI-powered prediction market analysis and autonomous trading platform. 
-                        Combining deep learning with market intelligence for superior betting insights.
+                        Advanced AI-powered event contract analysis and trading platform. 
+                        Combining deep learning with market intelligence for superior event trading insights.
                     </p>
                     <div class="footer-social">
-    <a href="https://twitter.com/MikoPoly" class="footer-social-link" target="_blank" rel="noopener">
+    <a href="https://twitter.com/Kalshi" class="footer-social-link" target="_blank" rel="noopener">
         <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1).png" alt="Twitter" />
     </a>
-    <a href="https://polymarket.com" class="footer-social-link" target="_blank" rel="noopener">
-        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1).png" alt="Polymarket" />
-    </a>
-    <a href="https://pump.fun/coin/FzhWcwAmGcC3gc6mpZb3hQDqx4spHskWdbZsd1typump" class="footer-social-link" target="_blank" rel="noopener">
-        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68c457abc0279df7fc3eb5a6_68c43c9ba4355c1b5e0d63da_68a663251731174a3dc255f1_689178ebf786d570b0c29520_tw%20(1)%20(1)%20(2).png" alt="Pump.fun" />
+    <a href="https://kalshi.com" class="footer-social-link" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </a>
 </div>
                 </div>
@@ -1290,16 +1294,16 @@
                 <div class="footer-column">
                     <h4>Platform</h4>
                     <div class="footer-links">
-                        <a href="https://polymarket.com/" class="footer-link">Live Markets</a>
-                        <a href="https://x.com/polymiko" class="footer-link">Trading Bot</a>
-                        <a href="https://polymarket.com/" class="footer-link">Analytics</a>
-                        <a href="https://docs.polymarket.com/" class="footer-link">API Access</a>
+                        <a href="https://kalshi.com/markets" class="footer-link">Live Markets</a>
+                        <a href="https://kalshi.com" class="footer-link">Trading Bot</a>
+                        <a href="https://kalshi.com" class="footer-link">Analytics</a>
+                        <a href="https://trading-api.readme.io/reference/getting-started" class="footer-link">API Access</a>
                     </div>
                 </div>
             
             <div class="footer-bottom">
                 <div class="footer-copyright">
-                    © 2025 PolyMiko. All rights reserved. Built for the future of prediction markets.
+                    © 2025 KalshiMate. All rights reserved. Built for the future of event contracts.
                 </div>
             </div>
         </div>
@@ -1311,15 +1315,15 @@
             <div class="modal-header">
                 <button class="modal-close" id="aboutClose" type="button">×</button>
                 <div class="about-hero">
-                    <div class="about-avatar">P</div>
+                    <div class="about-avatar">K</div>
                     <div class="about-hero-content">
-                        <h2>PolyMiko</h2>
-                        <p class="about-subtitle">AI Market Analyst & Autonomous Trading Platform</p>
+                        <h2>KalshiMate</h2>
+                        <p class="about-subtitle">AI Market Analyst & Event Trading Platform</p>
                         <div class="about-badges">
                             <span class="badge">🤖 AI-Powered</span>
                             <span class="badge">📊 Market Expert</span>
                             <span class="badge">⚡ Real-time</span>
-                            <span class="badge">🚀 Autonomous</span>
+                            <span class="badge">🏛️ CFTC Regulated</span>
                         </div>
                     </div>
                 </div>
@@ -1329,12 +1333,12 @@
                 <div class="about-section">
                     <h3>
                         <div class="section-icon">🎯</div>
-                        What is PolyMiko?
+                        What is KalshiMate?
                     </h3>
                     <p class="about-description">
-                        PolyMiko is a cutting-edge AI trading assistant designed specifically for prediction markets. 
+                        KalshiMate is a cutting-edge AI trading assistant designed specifically for Kalshi event contracts. 
                         We combine advanced machine learning algorithms with real-time market data to identify 
-                        high-conviction betting opportunities and provide transparent, data-driven analysis.
+                        high-conviction trading opportunities and provide transparent, data-driven analysis on CFTC-regulated markets.
                     </p>
                 </div>
 
@@ -1347,7 +1351,7 @@
                         <div class="feature-item">
                             <div class="feature-icon">🧠</div>
                             <h4>AI Market Analysis</h4>
-                            <p>Advanced algorithms analyze market depth, liquidity, momentum and sentiment across hundreds of markets</p>
+                            <p>Advanced algorithms analyze market depth, liquidity, momentum and sentiment across hundreds of event contracts</p>
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon">📈</div>
@@ -1370,9 +1374,9 @@
                             <p>24/7 market surveillance with instant alerts for emerging opportunities and risk events</p>
                         </div>
                         <div class="feature-item">
-                            <div class="feature-icon">🎯</div>
-                            <h4>Autonomous Trading</h4>
-                            <p>Coming soon: Full automated trading with transparent performance tracking and live streaming</p>
+                            <div class="feature-icon">🏛️</div>
+                            <h4>Regulated Markets</h4>
+                            <p>Trade on CFTC-regulated event contracts with full legal compliance and consumer protection</p>
                         </div>
                     </div>
                 </div>
@@ -1385,7 +1389,7 @@
                     <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-value">500+</div>
-                            <div class="stat-label">Markets Analyzed</div>
+                            <div class="stat-label">Contracts Analyzed</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value">24/7</div>
@@ -1408,9 +1412,9 @@
                         Roadmap & Vision
                     </h3>
                     <p class="about-description">
-                        PolyMiko aims to become the premier autonomous trading platform for prediction markets. 
-                        Our roadmap includes live trade streaming on pump.fun, transparent performance tracking, 
-                        and the goal of becoming the top-performing trader on Polymarket through disciplined, 
+                        KalshiMate aims to become the premier autonomous trading platform for Kalshi event contracts. 
+                        Our roadmap includes advanced trade streaming, transparent performance tracking, 
+                        and the goal of becoming the top-performing trader on Kalshi through disciplined, 
                         data-driven strategies.
                     </p>
                     <div class="feature-grid">
@@ -1422,7 +1426,7 @@
                         <div class="feature-item">
                             <div class="feature-icon">💰</div>
                             <h4>Revenue Model</h4>
-                            <p>10% creator rewards, 90% reinvested into $PolyMiko token</p>
+                            <p>10% creator rewards, 90% reinvested into platform growth</p>
                         </div>
                     </div>
                 </div>
@@ -1430,13 +1434,13 @@
                 <div class="cta-section">
                     <h3 class="cta-title">Ready to Start Trading Smarter?</h3>
                     <p class="cta-description">
-                        Join thousands of traders using AI-powered insights to maximize their prediction market returns
+                        Join thousands of traders using AI-powered insights to maximize their event contract returns
                     </p>
                     <div class="cta-buttons">
-                        <a href="#" class="cta-button primary">
+                        <a href="https://kalshi.com" class="cta-button primary">
                             Get Started
                         </a>
-                        <a href="#" class="cta-button secondary">
+                        <a href="https://trading-api.readme.io/reference/getting-started" class="cta-button secondary">
                             View Documentation
                         </a>
                     </div>
@@ -1446,15 +1450,15 @@
     </div>
 
     <script>
-        // Configuration
+        // Configuration - UPDATE THIS URL TO WHERE YOU HOST YOUR KALSHI JSON
         const CONFIG = {
-            POLYMARKET_DATA_URL: 'https://raw.githubusercontent.com/sovagpt/fa/main/polymarket_markets_full.json',
+            KALSHI_DATA_URL: 'https://raw.githubusercontent.com/sovagpt/fa/main/kalshi_markets_full.json', // Update this path
             OPENROUTER_API_URL: 'https://openrouter.ai/api/v1/chat/completions',
             MODEL: 'anthropic/claude-3.5-sonnet:beta'
         };
 
         // Global variables
-        let polymarketData = null;
+        let kalshiData = null;
         let chatHistory = [];
         let isLoading = false;
 
@@ -1465,98 +1469,69 @@
 
         async function initializeApp() {
             try {
-                await loadPolymarketData();
+                await loadKalshiData();
                 setupEventListeners();
             } catch (error) {
                 console.error('Failed to initialize app:', error);
             }
         }
 
-        async function loadPolymarketData() {
+        async function loadKalshiData() {
             try {
-                const response = await fetch(CONFIG.POLYMARKET_DATA_URL);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                polymarketData = await response.json();
-                console.log(`Loaded ${polymarketData.markets?.length || 0} markets`);
-                
+                const response = await fetch(CONFIG.KALSHI_DATA_URL);
+                kalshiData = await response.json();
+                console.log('Kalshi data loaded:', kalshiData);
             } catch (error) {
-                console.error('Error loading Polymarket data:', error);
-                throw error;
+                console.error('Failed to load Kalshi data:', error);
+                kalshiData = { markets: [] };
             }
         }
 
         function setupEventListeners() {
-    const messageInput = document.getElementById('messageInput');
-    const sendButton = document.getElementById('sendButton');
+            const input = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendButton');
+            const docsBtn = document.getElementById('docsBtn');
+            const aboutModal = document.getElementById('aboutModal');
+            const aboutClose = document.getElementById('aboutClose');
 
-    messageInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
-    });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
 
-    messageInput.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-    });
+            input.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
 
-    sendButton.addEventListener('click', sendMessage);
-    
-    // About modal handlers
-    const aboutBtn = document.getElementById('aboutBtn');
-    const aboutModal = document.getElementById('aboutModal');
-    const aboutClose = document.getElementById('aboutClose');
-    
-    if (aboutBtn && aboutModal) {
-        aboutBtn.addEventListener('click', () => { 
-            aboutModal.style.display = 'flex'; 
-        });
-        
-        if (aboutClose) {
-            aboutClose.addEventListener('click', () => { 
-                aboutModal.style.display = 'none'; 
+            docsBtn.addEventListener('click', function() {
+                aboutModal.style.display = 'flex';
+            });
+
+            aboutClose.addEventListener('click', function() {
+                aboutModal.style.display = 'none';
+            });
+
+            aboutModal.addEventListener('click', function(e) {
+                if (e.target === aboutModal) {
+                    aboutModal.style.display = 'none';
+                }
             });
         }
 
-        aboutModal.addEventListener('click', (e) => { 
-            if (e.target === aboutModal) {
-                aboutModal.style.display = 'none'; 
-            }
-        });
-    }
-
-    // Docs button handler
-    const docsBtn = document.getElementById('docsBtn');
-    if (docsBtn) {
-        docsBtn.addEventListener('click', () => {
-            window.open('./docs', '_blank');
-        });
-    }
-}
         function askQuestion(question) {
-            const messageInput = document.getElementById('messageInput');
-            messageInput.value = question;
+            document.getElementById('messageInput').value = question;
             sendMessage();
         }
 
         async function sendMessage() {
-            if (isLoading) return;
-            
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
-            if (!message) return;
+            if (!message || isLoading) return;
             
-            if (!polymarketData) {
-                alert('Market data is still loading. Please wait a moment and try again.');
-                return;
-            }
-
             const welcomeMsg = document.querySelector('.welcome-message');
             if (welcomeMsg) {
                 welcomeMsg.remove();
@@ -1608,22 +1583,20 @@
 
         function findRelevantMarkets(query) {
     const queryLower = query.toLowerCase();
-    const markets = polymarketData.markets || [];
+    const markets = kalshiData.markets || [];
     
-    // Expanded categories for better matching
+    // Kalshi-specific categories
     const categories = {
-        'premier_league': ['premier league', 'epl', 'english premier', 'manchester', 'liverpool', 'chelsea', 'arsenal', 'tottenham', 'city', 'united'],
-        'football': ['football', 'soccer', 'fifa', 'world cup', 'uefa', 'champions league', 'euro'],
-        'american_football': ['nfl', 'super bowl', 'american football', 'chiefs', 'cowboys', 'patriots', 'playoffs'],
-        'basketball': ['nba', 'basketball', 'lakers', 'warriors', 'lebron', 'finals', 'playoffs'],
-        'baseball': ['mlb', 'baseball', 'yankees', 'dodgers', 'world series'],
-        'fed_rates': ['fed', 'federal reserve', 'interest rate', 'fomc', 'jerome powell', 'inflation'],
-        'politics': ['election', 'president', 'biden', 'trump', 'congress', 'senate', 'republican', 'democrat'],
-        'crypto': ['bitcoin', 'ethereum', 'crypto', 'btc', 'eth', 'binance', 'coinbase', 'defi'],
-        'stocks': ['stock', 'nasdaq', 'dow', 'sp500', 's&p', 'apple', 'tesla', 'nvidia', 'market'],
-        'entertainment': ['oscar', 'emmy', 'grammy', 'movie', 'netflix', 'disney', 'award'],
-        'weather': ['weather', 'hurricane', 'storm', 'temperature', 'climate'],
-        'general': ['will', 'happen', 'outcome', 'result', 'winner', 'prediction', 'forecast']
+        'fed_rates': ['fed', 'federal reserve', 'interest rate', 'fomc', 'jerome powell', 'rate cut', 'rate hike', 'basis points', 'bps'],
+        'economics': ['gdp', 'unemployment', 'jobs', 'cpi', 'inflation', 'recession', 'economic', 'payroll', 'jobless'],
+        'politics': ['election', 'president', 'biden', 'trump', 'congress', 'senate', 'republican', 'democrat', 'vote', 'governor'],
+        'weather': ['weather', 'hurricane', 'storm', 'temperature', 'climate', 'rainfall', 'snow', 'heat', 'cold', 'tornado'],
+        'crypto': ['bitcoin', 'ethereum', 'crypto', 'btc', 'eth', 'price'],
+        'stocks': ['stock', 'nasdaq', 'dow', 'sp500', 's&p', 'apple', 'tesla', 'nvidia', 'market', 'index'],
+        'sports': ['nfl', 'nba', 'mlb', 'super bowl', 'world series', 'finals', 'game', 'win', 'playoffs'],
+        'entertainment': ['oscar', 'emmy', 'grammy', 'movie', 'netflix', 'disney', 'award', 'box office'],
+        'tech': ['ai', 'artificial intelligence', 'openai', 'google', 'meta', 'microsoft', 'tech'],
+        'general': ['will', 'happen', 'outcome', 'result', 'winner', 'prediction', 'forecast', 'above', 'below']
     };
     
     let searchScore = {};
@@ -1665,7 +1638,7 @@
     
     let relevantMarkets = Object.entries(searchScore)
         .sort(([, a], [, b]) => b - a)
-        .slice(0, 4) // Show max 4 markets to avoid clutter
+        .slice(0, 4)
         .map(([index]) => markets[parseInt(index)]);
     
     // Fallback: if no matches, show trending markets
@@ -1681,15 +1654,18 @@
 
         function extractCategory(title, description) {
     const text = (title + ' ' + description).toLowerCase();
+    if (text.includes('fed') || text.includes('interest rate') || text.includes('fomc') || text.includes('bps')) return 'finance';
+    if (text.includes('gdp') || text.includes('inflation') || text.includes('cpi') || text.includes('unemployment') || text.includes('jobs')) return 'economics';
+    if (text.includes('election') || text.includes('president') || text.includes('political') || text.includes('biden') || text.includes('trump') || text.includes('governor')) return 'politics';
+    if (text.includes('weather') || text.includes('hurricane') || text.includes('temperature') || text.includes('storm') || text.includes('heat')) return 'weather';
     if (text.includes('crypto') || text.includes('bitcoin') || text.includes('ethereum') || text.includes('btc') || text.includes('eth')) return 'crypto';
-    if (text.includes('fed') || text.includes('interest rate') || text.includes('inflation') || text.includes('fomc')) return 'finance';
-    if (text.includes('election') || text.includes('president') || text.includes('political') || text.includes('biden') || text.includes('trump')) return 'politics';
-    if (text.includes('nfl') || text.includes('nba') || text.includes('sport') || text.includes('football') || text.includes('basketball')) return 'sports';
+    if (text.includes('nfl') || text.includes('nba') || text.includes('mlb') || text.includes('sport') || text.includes('game')) return 'sports';
+    if (text.includes('ai') || text.includes('openai') || text.includes('google') || text.includes('tech')) return 'tech';
     return 'general';
 }
 
 async function findRelevantMarketsWithAI(userQuery) {
-    const markets = polymarketData.markets || [];
+    const markets = kalshiData.markets || [];
     
     // Take a sample to avoid token limits
     const marketSample = markets.slice(0, 100);
@@ -1698,7 +1674,7 @@ async function findRelevantMarketsWithAI(userQuery) {
     const marketSummaries = marketSample.map((market, index) => ({
         index: index,
         title: market.title,
-        description: market.description.substring(0, 200), // Truncate long descriptions
+        description: market.description.substring(0, 200),
         volume24h: market.volume24h,
         category: extractCategory(market.title, market.description)
     }));
@@ -1706,10 +1682,10 @@ async function findRelevantMarketsWithAI(userQuery) {
     const aiContext = `
 User Query: "${userQuery}"
 
-Available Markets:
+Available Event Contracts:
 ${JSON.stringify(marketSummaries, null, 2)}
 
-Task: Find the 3-4 most relevant markets for this query. Return only a JSON array of indices like [2, 15, 23]. Consider semantic relevance and market activity.`;
+Task: Find the 3-4 most relevant Kalshi event contracts for this query. Return only a JSON array of indices like [2, 15, 23]. Consider semantic relevance and market activity.`;
 
     try {
         const response = await callOpenRouterAPI(aiContext);
@@ -1749,11 +1725,11 @@ Task: Find the 3-4 most relevant markets for this query. Return only a JSON arra
             return `
 User Question: "${userMessage}"
 
-Relevant Betting Markets Data:
+Relevant Kalshi Event Contracts Data:
 ${JSON.stringify(marketData, null, 2)}
 
 Instructions:
-1. Analyze the provided betting markets data relevant to the user's question
+1. Analyze the provided Kalshi event contracts data relevant to the user's question
 2. Give your expert opinion on the most likely outcomes based on market data
 3. Explain your reasoning using odds, volume, and market sentiment
 4. Be conversational and engaging
@@ -1762,6 +1738,7 @@ Instructions:
 7. Consider volume and liquidity as indicators of market confidence
 8. Don't mention that you're looking at JSON data - analyze the markets naturally
 9. Keep sections well-organized with clear headings when discussing multiple topics
+10. Remember these are CFTC-regulated event contracts on Kalshi
 
 Provide your analysis and predictions based on this market data.
 `;
@@ -1779,10 +1756,10 @@ Provide your analysis and predictions based on this market data.
     }
 
     // Check if this is a market search request
-    const isMarketSearch = context.includes('Available Markets:');
+    const isMarketSearch = context.includes('Available Event Contracts:');
     const systemMessage = isMarketSearch 
-        ? 'You are a data analyst that finds relevant prediction markets. Return only the requested JSON array format.'
-        : 'You are an expert betting analyst who provides intelligent insights on prediction markets. Analyze market data and give clear, well-formatted predictions with reasoning.';
+        ? 'You are a data analyst that finds relevant Kalshi event contracts. Return only the requested JSON array format.'
+        : 'You are an expert event contract analyst who provides intelligent insights on Kalshi markets. Analyze market data and give clear, well-formatted predictions with reasoning.';
 
     const response = await fetch(CONFIG.OPENROUTER_API_URL, {
         method: 'POST',
@@ -1790,7 +1767,7 @@ Provide your analysis and predictions based on this market data.
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
             'HTTP-Referer': window.location.origin,
-            'X-Title': 'Polymarket AI Companion'
+            'X-Title': 'Kalshi AI Companion'
         },
         body: JSON.stringify({
             model: CONFIG.MODEL,
@@ -1829,7 +1806,7 @@ Provide your analysis and predictions based on this market data.
         avatar.textContent = "YOU"; 
     } else { 
         avatar.classList.add("avatar-bot"); 
-        avatar.innerHTML = "<img src=\"https://cdn.prod.website-files.com/674396c59212c6ea348b24e0/68f018d92b0ff7db6b8933d2_New%20Project%20(44).png\" alt=\"PolyMiko\" />"; 
+        avatar.innerHTML = "<span style='font-size: 1.2rem; font-weight: 800;'>K</span>"; 
     }
     
     const contentDiv = document.createElement('div');
@@ -1840,14 +1817,14 @@ Provide your analysis and predictions based on this market data.
     messageDiv.appendChild(contentDiv);
     messagesContainer.appendChild(messageDiv);
     
-    // ALWAYS show markets for bot messages (this is the key change)
+    // ALWAYS show markets for bot messages
     if (sender === 'bot' && relevantMarkets && relevantMarkets.length > 0) {
         setTimeout(() => {
             const marketsSection = document.createElement('div');
             marketsSection.className = 'markets-section';
             marketsSection.innerHTML = `
                 <div class="markets-header">
-                    📊 Relevant Markets
+                    📊 Relevant Event Contracts
                 </div>
             `;
             
@@ -1860,7 +1837,7 @@ Provide your analysis and predictions based on this market data.
             contentDiv.appendChild(marketsSection);
             
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 500); // Small delay for better UX
+        }, 500);
     }
     
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -1870,12 +1847,12 @@ Provide your analysis and predictions based on this market data.
         function createMarketCard(market, index) {
     const formatVolume = (vol) => {
         if (!vol || vol === 0) return '$0';
-        if (vol > 1000000) return `${(vol / 1000000).toFixed(1)}M`;
-        if (vol > 1000) return `${(vol / 1000).toFixed(1)}K`;
-        return `${vol.toFixed(0)}`;
+        if (vol > 1000000) return `$${(vol / 1000000).toFixed(1)}M`;
+        if (vol > 1000) return `$${(vol / 1000).toFixed(1)}K`;
+        return `$${vol.toFixed(0)}`;
     };
     
-    const formatPrice = (price) => `${(price * 100).toFixed(1)}%`;
+    const formatPrice = (price) => `${(price * 100).toFixed(1)}¢`;
     
     const outcome1 = market.outcomes[0];
     const outcome2 = market.outcomes[1];
@@ -1944,15 +1921,3 @@ Provide your analysis and predictions based on this market data.
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
